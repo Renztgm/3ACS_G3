@@ -1,0 +1,40 @@
+﻿@page
+@model Payroll_Test_2.Pages.Account.loginModel
+@{
+}
+
+<div class="container border" style="padding: 20px;">
+	<form method="post">
+		<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+		<div class="form-group row">
+			<div class="col-2"><!---Label--->
+				<label asp-for="Credential.Username"></label>
+
+			</div>
+			<div class="col-5">
+				<input type="text" asp-for="Credential.Username" class="form-control" style="margin-bottom: 10px"/>
+				<span class="text-danger" asp-validation-for="Credential.Username"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-2">
+				<!---Label--->
+				<label asp-for="Credential.Password"></label>
+
+			</div>
+			<div class="col-5">
+				<input type="password" asp-for="Credential.Password" class="form-control"/>
+				<span class="text-danger" asp-validation-for="Credential.Password"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-2">
+				<!---Label--->
+				<input type="submit" class="btn btn-primary"value="Login"/>
+
+			</div>
+			<div class="col-5">
+			</div>
+		</div>
+	</form>
+</div>
