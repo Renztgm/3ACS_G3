@@ -9,14 +9,11 @@ namespace Payroll_Test_2.Data
         {
         }
 
-        public DbSet<Account> Accounts { get; set; }
-    }
+        public DbSet<Employee> Employees { get; set; }
 
-    public class Account
-    {
-        public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Name { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().ToTable("employee"); // ✅ Ensure correct SQL mapping
+        }
     }
 }

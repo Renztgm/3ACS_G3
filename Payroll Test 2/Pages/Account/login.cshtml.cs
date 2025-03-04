@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -35,13 +35,13 @@ namespace Payroll_Test_2.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var user = _context.Accounts
+                var user = _context.Employees
                     .FirstOrDefault(u => u.Username == Credential.Username && u.Password == Credential.Password);
 
                 if (user != null)
                 {
                     // Store username in session
-                    HttpContext.Session.SetString("UserName", user.Name);
+                    HttpContext.Session.SetString("UserName", user.FirstName);
                     return RedirectToPage("/Index"); // Redirect after login
                 }
                 else
