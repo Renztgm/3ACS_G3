@@ -18,5 +18,6 @@ namespace Payroll_Test_2.Data
 
         [Column("first_name")] // ✅ Matches database column
         public string FirstName { get; set; }
+        //update
     }
 }
