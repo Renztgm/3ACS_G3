@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -20,13 +20,11 @@ namespace Payroll_Test_2.Pages.Account
         [BindProperty]
         public Credential Credential { get; set; }
 
-        public int UsernameCount { get; set; }
-
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("UserName") != null)
             {
-                return RedirectToPage("/Index"); // Redirect to home if already logged in
+                return RedirectToPage("/Index"); // ✅ Redirect if already logged in
             }
             return Page();
         }
@@ -35,13 +33,19 @@ namespace Payroll_Test_2.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var user = _context.Employees
-                    .FirstOrDefault(u => u.Username == Credential.Username && u.Password == Credential.Password);
+                var user = _context.Logins
+                    .Include(l => l.Employee) // ✅ Load Employee details
+                    .FirstOrDefault(l => l.Username == Credential.Username
+                                      && l.PasswordHash == Credential.Password);
 
                 if (user != null)
                 {
-                    // Store username in session
-                    HttpContext.Session.SetString("UserName", user.FirstName);
+                    // ✅ Update LastLogin timestamp
+                    user.LastLogin = DateTime.UtcNow;
+                    _context.SaveChanges();
+
+                    // ✅ Store username in session
+                    HttpContext.Session.SetString("UserName", user.Employee.FirstName);
                     return RedirectToPage("/Index"); // Redirect after login
                 }
                 else

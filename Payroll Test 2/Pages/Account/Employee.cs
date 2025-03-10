@@ -1,23 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace Payroll_Test_2.Data
 {
-    [Table("employee")] // ✅ Ensures correct table mapping
+    [Table("employee")] // ✅ Maps to the database table "employee"
     public class Employee
     {
         [Key]
-        [Column("employee_id")] // ✅ Maps to SQL column
-        public int EmployeeId { get; set; } 
+        [Column("EmployeeID")]
+        public int EmployeeId { get; set; }
 
-        [Column("username")] // ✅ Matches database column name
-        public string Username { get; set; }
-
-        [Column("password")] // ⚠️ Ensure column exists, but consider hashing passwords!
-        public string Password { get; set; }
-
-        [Column("first_name")] // ✅ Matches database column
+        [Required]
+        [Column("FirstName")]
         public string FirstName { get; set; }
-        //update
+
+        [Required]
+        [Column("LastName")]
+        public string LastName { get; set; }
+
+        public ICollection<Login> Login { get; set; } // 🔗 Navigation Property
     }
 }

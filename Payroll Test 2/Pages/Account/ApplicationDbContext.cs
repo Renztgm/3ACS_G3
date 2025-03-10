@@ -10,10 +10,12 @@ namespace Payroll_Test_2.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Login> Logins { get; set; } // ✅ Ensure Logins table is mapped
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().ToTable("employee"); // ✅ Ensure correct SQL mapping
+            modelBuilder.Entity<Employee>().ToTable("Employees"); // ✅ Matches DB table
+            modelBuilder.Entity<Login>().ToTable("Logins"); // ✅ Matches DB table
         }
     }
 }
