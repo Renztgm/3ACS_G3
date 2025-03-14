@@ -19,6 +19,7 @@ namespace Payroll_Test_2.Pages.Account
 
         [BindProperty]
         public Credential Credential { get; set; }
+        public string ErrorMessage { get; set; }
 
         public IActionResult OnGet()
         {
@@ -34,7 +35,9 @@ namespace Payroll_Test_2.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = _context.Logins
-                    .Include(l => l.Employee) // ✅ Load Employee details
+                    .Include(l => l.Employee)
+                    .ThenInclude(e => e.Position)  // ✅ Include Position details
+                    .Include(l => l.Employee.Department)  // ✅ Include Department details
                     .FirstOrDefault(l => l.Username == Credential.Username
                                       && l.PasswordHash == Credential.Password);
 
@@ -44,13 +47,16 @@ namespace Payroll_Test_2.Pages.Account
                     user.LastLogin = DateTime.UtcNow;
                     _context.SaveChanges();
 
-                    // ✅ Store username in session
+                    // ✅ Store User Info in Session
                     HttpContext.Session.SetString("UserName", user.Employee.FirstName);
+                    HttpContext.Session.SetString("UserPosition", user.Employee.Position?.PositionName ?? "N/A");
+                    HttpContext.Session.SetString("UserDepartment", user.Employee.Department?.DepartmentName ?? "N/A");
+
                     return RedirectToPage("/Index"); // Redirect after login
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid username or password");
+                    ErrorMessage = "Invalid username or password.";
                 }
             }
             return Page();
