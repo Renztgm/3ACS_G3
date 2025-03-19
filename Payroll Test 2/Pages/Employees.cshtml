@@ -49,7 +49,7 @@
         <tbody>
             @foreach (var employee in Model.Employees)
             {
-                <tr>
+                <tr onclick="selectRow(@employee.EmployeeId)">
                     <td>@employee.EmployeeId</td>
                     <td>@employee.FirstName @employee.LastName</td>
                     <td>@employee.Department.DepartmentName</td>
@@ -63,6 +63,13 @@
             }
         </tbody>
     </table>
+
+    <script>
+        function selectRow(employeeId) {
+            window.location.href = `/Attendances?id=${employeeId}`;
+        }
+    </script>
+
 
     <!-- Pagination -->
     <nav>

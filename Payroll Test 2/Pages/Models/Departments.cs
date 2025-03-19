@@ -3,19 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
-namespace Payroll_Test_2.Data
+namespace Payroll_Test_2.Pages.Models
 {
-    [Table("positions")] // Maps to the database table "positions"
-    public class Position
+    [Table("departments")] // Maps to the database table "departments"
+    public class Department
     {
         [Key]
-        [Column("PositionID")]
-        public int PositionId { get; set; }
+        [Column("DepartmentID")]
+        public int DepartmentId { get; set; }
 
         [Required]
-        [Column("PositionName")]
+        [Column("DepartmentName")]
         [StringLength(100)]
-        public string PositionName { get; set; }
+        public string DepartmentName { get; set; }
 
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -23,7 +23,7 @@ namespace Payroll_Test_2.Data
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        // Navigation Property - One Position can have many Employees
+        // Navigation Property - One Department can have many Employees
         public ICollection<Employee> Employees { get; set; }
     }
 }

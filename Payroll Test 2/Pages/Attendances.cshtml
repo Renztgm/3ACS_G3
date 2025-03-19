@@ -1,0 +1,136 @@
+﻿@page
+@model Payroll_Test_2.Pages.AttendancesModel
+@{
+    ViewData["Title"] = "Attendance Records";
+}
+
+<style>
+    .table-responsive {
+        margin-top: -10px; /* Reduce gap */
+    }
+
+    /* Adjust row spacing */
+    .table tbody tr {
+        margin-bottom: 5px; /* Adds space between rows */
+        padding: 8px 0; /* Adjust row padding */
+    }
+
+    /* Adjust cell padding */
+    .table td, .table th {
+        padding: 10px; /* Modify as needed */
+    }
+</style>
+
+
+<div class="container mt-4">
+    <h2 class="mb-4">Attendance Records</h2>
+
+    <!-- Date Navigation -->
+    <div class="d-flex justify-content-between mb-3">
+        <a class="btn btn-secondary" asp-page="Attendances" asp-route-date="@Model.PreviousDate.ToString("yyyy-MM-dd")">← Yesterday</a>
+        <h4>@Model.SelectedDate.ToString("MMMM dd, yyyy")</h4>
+        <a class="btn btn-secondary" asp-page="Attendances" asp-route-date="@Model.NextDate.ToString("yyyy-MM-dd")">Tomorrow →</a>
+    </div>
+
+    <!-- Chart Container -->
+    <canvas id="attendanceChart"></canvas>
+
+    <!-- Attendance Table -->
+    <table class="table table-striped mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Work Hours</th>
+                <th>Status</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model.AttendanceRecords)
+            {
+                <tr>
+                    <td>@record.Employee.FirstName @record.Employee.LastName</td>
+                    <td>@record.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@record.CheckInTime?.ToString(@"hh\:mm")</td>
+                    <td>@record.CheckOutTime?.ToString(@"hh\:mm")</td>
+                    <td>@record.WorkHours</td>
+                    <td>@record.Status</td>
+                    <td>@record.Remarks</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById("attendanceChart").getContext("2d");
+
+        // Get attendance data from Razor Page
+        var attendanceData = @Html.Raw(Model.ChartDataJson);
+
+        var labels = attendanceData.map(record => record.Employee); // Employee Names
+        var checkInTimes = attendanceData.map(record => record.CheckInTime); // Start Times
+        var workDurations = attendanceData.map(record => record.WorkHours); // Duration
+
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Offset",
+                        data: checkInTimes,
+                        backgroundColor: "rgba(0,0,0,0)", // Transparent offset
+                        borderWidth: 0
+                    },
+                    {
+                        label: "Work Hours",
+                        data: workDurations,
+                        backgroundColor: "rgba(75, 192, 192, 0.7)", // Actual work hours bar
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                indexAxis: "y", // Horizontal bars
+                scales: {
+                    x: {
+                        stacked: true,
+                        min: 0,
+                        max: 24,
+                        ticks: {
+                            stepSize: 1,
+                            callback: function(value) { return value + ":00"; }
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        title: { display: true, text: "Employee" }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }, // Remove legend (tagging)
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                if (tooltipItem.datasetIndex === 0) {
+                                    return ""; // Hide tooltip for offset bars
+                                }
+                                return tooltipItem.raw + " hours";
+                            }
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        });
+    });
+</script>

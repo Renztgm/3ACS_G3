@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Payroll_Test_2.Pages.Models;
 
 namespace Payroll_Test_2.Data
 {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Payroll_Test_2.Data;
+using Payroll_Test_2.Pages.Models;
 
-namespace Payroll_Test_2.Data
+namespace Payroll_Test_2.Pages
 {
     public class ApplicationDbContext : DbContext
     {
@@ -13,6 +15,7 @@ namespace Payroll_Test_2.Data
         public DbSet<Login> Logins { get; set; } // ✅ Ensure Logins table is mapped
         public DbSet<Department> Departments { get; set; }  // Add this
         public DbSet<Position> Positions { get; set; }  // Add this
+        public DbSet<Attendance> Attendances { get; set; }  // ✅ Add Attendance Table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +23,7 @@ namespace Payroll_Test_2.Data
             modelBuilder.Entity<Login>().ToTable("Logins"); // ✅ Matches DB table
             modelBuilder.Entity<Department>().ToTable("Departments");  // ✅ Explicitly map
             modelBuilder.Entity<Position>().ToTable("Positions");  // ✅ Explicitly map
+            modelBuilder.Entity<Attendance>().ToTable("Attendance");  // ✅ Map Attendance table
 
         }
     }

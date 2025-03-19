@@ -3,23 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 
-namespace Payroll_Test_2.Data
+namespace Payroll_Test_2.Pages.Models
 {
-    [Table("role_permission")] // Maps to the database table "role_permission"
-    public class Role
+    [Table("positions")] // Maps to the database table "positions"
+    public class Position
     {
         [Key]
-        [Column("RoleID")]
-        public int RoleId { get; set; }
+        [Column("PositionID")]
+        public int PositionId { get; set; }
 
         [Required]
-        [Column("RoleName")]
+        [Column("PositionName")]
         [StringLength(100)]
-        public string RoleName { get; set; }
-
-        [Column("Description")]
-        [StringLength(255)]
-        public string Description { get; set; }
+        public string PositionName { get; set; }
 
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -27,7 +23,7 @@ namespace Payroll_Test_2.Data
         [Column("UpdatedAt")]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
-        // Navigation Property - Can be used if you link roles to users
+        // Navigation Property - One Position can have many Employees
         public ICollection<Employee> Employees { get; set; }
     }
 }
