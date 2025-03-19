@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Payroll_Test_2.Data;
 using Payroll_Test_2.Pages.Models;
@@ -24,13 +25,20 @@ namespace Payroll_Test_2.Pages
         public DateTime PreviousDate => SelectedDate.AddDays(-1);
         public DateTime NextDate => SelectedDate.AddDays(1);
         public string ChartDataJson { get; set; }
+        public string AttendanceMonthJson { get; set; }
 
-        public async Task OnGetAsync(DateTime? date)
+
+        public async Task<IActionResult> OnGetAsync(string date)
         {
-            SelectedDate = date ?? DateTime.Today;
+            if (!DateTime.TryParse(date, out DateTime parsedDate))
+            {
+                parsedDate = DateTime.Today; // Default to today if invalid
+            }
+
+            SelectedDate = parsedDate;
 
             AttendanceRecords = await _context.Attendances
-                .Include(a => a.Employee) // Load Employee data
+                .Include(a => a.Employee)
                 .Where(a => a.Date.Date == SelectedDate.Date)
                 .ToListAsync();
 
@@ -44,6 +52,9 @@ namespace Payroll_Test_2.Pages
             }).ToList();
 
             ChartDataJson = JsonSerializer.Serialize(chartData);
+            return Page();
         }
+
+
     }
 }
