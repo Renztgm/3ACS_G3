@@ -38,6 +38,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>AttendanceID</th>
+                        <th>Employee ID</th> <!-- Added this -->
                         <th>Name</th>
                         <th>Date</th>
                         <th>Status</th>
@@ -52,16 +53,17 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const tableBody = document.querySelector("tbody");
+            document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.querySelector("#attendanceTableBody");
+
             let attendanceMonthData = @Html.Raw(Model.AttendanceMonthJson);
 
-            // Ensure the JSON data is parsed correctly
             if (attendanceMonthData && Array.isArray(attendanceMonthData)) {
                 attendanceMonthData.forEach(record => {
                     const row = document.createElement("tr");
                     row.innerHTML = `
                         <td>${record.Id}</td>
+                        <td>${record.EmployeeId}</td> <!-- Added Employee ID column -->
                         <td>${record.Name}</td>
                         <td>${record.Date}</td>
                         <td class="${record.Present ? 'present' : 'absent'}">
@@ -70,16 +72,22 @@
                         <td>${record.Time}</td>
                     `;
 
+                    // Add click event to navigate to attendance details page
+                    row.addEventListener("click", function () {
+                        const attendanceID = record.Id;
+                        const employeeID = record.EmployeeId; // Use the included Employee ID
+                        const date = record.Date;
+                        window.location.href = `/Attendances?id=${employeeID}&attendanceId=${attendanceID}&date=${date}`;
+                    });
+
                     tableBody.appendChild(row);
                 });
             } else {
-                tableBody.innerHTML = "<tr><td colspan='5'>No attendance records found.</td></tr>";
+                tableBody.innerHTML = "<tr><td colspan='6'>No attendance records found.</td></tr>";
             }
         });
+
     </script>
-
-
-
 
 </body>
 </html>

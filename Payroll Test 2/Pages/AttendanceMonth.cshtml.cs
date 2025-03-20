@@ -17,6 +17,7 @@ namespace Payroll_Test_2.Pages
         {
             _context = context;
         }
+        public int EmployeeId { get; set; }  // Ensure this is available
 
         public string AttendanceMonthJson { get; set; }
 
@@ -27,12 +28,15 @@ namespace Payroll_Test_2.Pages
                 return NotFound(); // No EmployeeID in the URL
             }
 
+            EmployeeId = id.Value; // Store Employee ID in the model
+
             var attendanceData = await _context.Attendances
                 .Include(a => a.Employee)
                 .Where(a => a.Employee.EmployeeId == id) // Filter by EmployeeID
                 .Select(a => new
                 {
                     Id = a.AttendanceID,
+                    EmployeeId = a.Employee.EmployeeId, // Include Employee ID
                     Name = a.Employee.FirstName + " " + a.Employee.LastName,
                     Date = a.Date.ToString("yyyy-MM-dd"),
                     Present = a.CheckInTime != null,
@@ -45,6 +49,7 @@ namespace Payroll_Test_2.Pages
             AttendanceMonthJson = JsonSerializer.Serialize(attendanceData);
             return Page();
         }
+
 
 
 

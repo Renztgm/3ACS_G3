@@ -36,8 +36,9 @@
 <h2>Employee Attendance for @Model.SelectedDate.ToString("MMMM dd, yyyy")</h2>
 
 <!-- Date Selection -->
-<a asp-page="Attendances" asp-route-date="@Model.PreviousDate.ToString("yyyy-MM-dd")" class="btn btn-secondary">Previous Day</a>
-<a asp-page="Attendances" asp-route-date="@Model.NextDate.ToString("yyyy-MM-dd")" class="btn btn-secondary">Next Day</a>
+<a asp-page="Attendances" asp-route-id="@Model.EmployeeId" asp-route-date="@Model.PreviousDate.ToString("yyyy-MM-dd")" class="btn btn-secondary">Previous Day</a>
+<a asp-page="Attendances" asp-route-id="@Model.EmployeeId" asp-route-date="@Model.NextDate.ToString("yyyy-MM-dd")" class="btn btn-secondary">Next Day</a> 
+
 
 <!-- Manual Date Picker -->
 <input type="date" id="datePicker" value="@Model.SelectedDate.ToString("yyyy-MM-dd")" class="form-control mt-3">
@@ -96,9 +97,9 @@
                     },
                     y: {
                         stacked: true,
-                        title: { display: true, text: "Employee" }
+                        title: { display: false, text: "Employee" }
                     }
-                },
+                },  
                 plugins: {
                     legend: { display: false },
                     tooltip: {
@@ -118,11 +119,19 @@
         });
 
         // Date Picker Navigation
-        document.getElementById("goToDate").addEventListener("click", function () {
-            var selectedDate = document.getElementById("datePicker").value;
-            if (selectedDate) {
-                window.location.href = "/Attendances/" + selectedDate;
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("goToDate").addEventListener("click", function () {
+                var datePicker = document.getElementById("datePicker");
+                if (!datePicker) return; // Ensure date picker exists
+
+                var selectedDate = datePicker.value;
+                var employeeId = "@Model.EmployeeId"; // Employee ID from Razor
+
+                if (selectedDate) {
+                    var formattedDate = new Date(selectedDate).toISOString().split("T")[0]; // Ensure correct format
+                    window.location.href = `/Attendances?id=${employeeId}&date=${formattedDate}`;
+                }
+            });
         });
     });
 </script>
