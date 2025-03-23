@@ -1,0 +1,44 @@
+﻿@page
+@model Payroll_Test_2.Pages.PayrollModel
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/payroll.css" asp-append-version="true" />
+</head>
+<div class="admin-payroll-container">
+    <h2>Payroll Management</h2>
+
+    <div class="payroll-actions">
+        <button class="btn btn-export">Export Payroll Data</button>
+    </div>
+
+    <h3>Employee Payroll List</h3>
+    <table class="payroll-table">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Basic Salary</th>
+                <th>Overtime Pay</th>
+                <th>Deductions</th>
+                <th>Net Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payroll in Model.PayrollList)
+            {
+                <tr>
+                    <td>@(payroll.Employee.LastName + " " + payroll.Employee.FirstName)</td> @* Assuming Employee has a FullName property *@
+                    <td>₱@payroll.BasicSalary.ToString("N2")</td>
+                    <td>₱@payroll.OvertimePay.ToString("N2")</td>
+                    <td>-₱@payroll.Deductions.ToString("N2")</td>
+                    <td>₱@payroll.NetSalary.ToString("N2")</td>
+                    <td>
+                        <a href="/Payroll/EditPayroll?id=@payroll.PayrollID" class="btn btn-primary">Edit Payroll</a>
+                        <button class="btn btn-download">Download Payslip</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

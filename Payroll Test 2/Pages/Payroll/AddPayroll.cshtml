@@ -1,0 +1,99 @@
+﻿@page
+@model Payroll_Test_2.Pages.Payroll.AddPayrollModel
+@{
+}
+<div class="payroll-form-container">
+    <h2>Add Payroll Entry</h2>
+
+    <form id="payrollForm">
+        <!-- Employee Selection -->
+        <label for="employee">Employee:</label>
+        <select id="employee" name="employee" required>
+            <option value="">-- Select Employee --</option>
+            <option value="1">Juan Dela Cruz</option>
+            <option value="2">Maria Santos</option>
+            <!-- Populate dynamically from database -->
+        </select>
+
+        <!-- Salary Inputs -->
+        <label for="basicSalary">Basic Salary:</label>
+        <input type="number" id="basicSalary" name="basicSalary" required>
+
+        <label for="allowances">Allowances:</label>
+        <input type="number" id="allowances" name="allowances" value="0">
+
+        <label for="deductions">Deductions:</label>
+        <input type="number" id="deductions" name="deductions" value="0">
+
+        <!-- Net Salary (Auto Calculated) -->
+        <label for="netSalary">Net Salary:</label>
+        <input type="number" id="netSalary" name="netSalary" readonly>
+
+        <!-- Form Buttons -->
+        <button type="submit" class="btn btn-submit">Save Payroll</button>
+        <button type="button" class="btn btn-cancel" onclick="closePayrollForm()">Cancel</button>
+    </form>
+</div>
+<script>
+        document.getElementById("payrollForm").addEventListener("input", function () {
+        let basicSalary = parseFloat(document.getElementById("basicSalary").value) || 0;
+        let allowances = parseFloat(document.getElementById("allowances").value) || 0;
+        let deductions = parseFloat(document.getElementById("deductions").value) || 0;
+
+        let netSalary = basicSalary + allowances - deductions;
+        document.getElementById("netSalary").value = netSalary.toFixed(2);
+    });
+
+    function closePayrollForm() {
+        document.querySelector(".payroll-form-container").style.display = "none";
+    }
+
+</script>
+<style>
+    .payroll-form-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        margin: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .payroll-form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .payroll-form-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .payroll-form-container input, .payroll-form-container select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+    .btn {
+        margin-top: 15px;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-submit {
+        background: green;
+        color: white;
+    }
+
+    .btn-cancel {
+        background: red;
+        color: white;
+    }
+
+</style>

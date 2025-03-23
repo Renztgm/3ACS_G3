@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Employee Portal</title>
+    <link rel="stylesheet" href="/css/site.css"> <!-- Your main CSS -->
+</head>
+<body>
+    <header>
+        <h2>Employee Portal</h2>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Payroll System</p>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

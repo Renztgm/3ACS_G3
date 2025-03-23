@@ -43,7 +43,7 @@
                 <th>Name</th>
                 <th>Department</th>
                 <th>Position</th>
-                <th>Actions</th>
+                @* <th>Actions</th> *@
             </tr>
         </thead>
         <tbody>
@@ -54,11 +54,11 @@
                     <td>@employee.FirstName @employee.LastName</td>
                     <td>@employee.Department.DepartmentName</td>
                     <td>@employee.Position.PositionName</td>
-                    <td>
-                        <a asp-page="/Employees/Edit" asp-route-id="@employee.EmployeeId" class="btn btn-warning btn-sm">Edit</a>
-                        <a asp-page="/Employees/Details" asp-route-id="@employee.EmployeeId" class="btn btn-info btn-sm">View</a>
-                        <a asp-page="/Employees/Delete" asp-route-id="@employee.EmployeeId" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
+                    @* <td> *@
+                    @*     <a asp-page="/Employees/Edit" asp-route-id="@employee.EmployeeId" class="btn btn-warning btn-sm">Edit</a> *@
+                    @*     <a asp-page="/Employees/Details" asp-route-id="@employee.EmployeeId" class="btn btn-info btn-sm">View</a> *@
+                    @*     <a asp-page="/Employees/Delete" asp-route-id="@employee.EmployeeId" class="btn btn-danger btn-sm">Delete</a> *@
+                    @* </td> *@
                 </tr>
             }
         </tbody>

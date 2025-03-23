@@ -1,0 +1,50 @@
+﻿@page
+@model EmployeeLoginModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Employee Login";
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Payroll_Test_2.styles.css" asp-append-version="true" />
+</head>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    <h3>Employee Login</h3>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                    }
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="Credential.Username" class="form-label">Username</label>
+                            <input asp-for="Credential.Username" class="form-control" placeholder="Enter username" />
+                            <span asp-validation-for="Credential.Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Credential.Password" class="form-label">Password</label>
+                            <input asp-for="Credential.Password" type="password" class="form-control" placeholder="Enter password" />
+                            <span asp-validation-for="Credential.Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,40 @@
+﻿@page
+@model Payroll_Test_2.Pages.EmployeeAccount.EmployeeDashboardModel
+@{
+    Layout = "_EmployeeLayout";
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Payroll_Test_2.styles.css" asp-append-version="true" />
+</head>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Welcome, @Model.UserName</h2>
+
+    <div class="row">
+        <!-- User Info Card -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">User Details</h5>
+                    <p><strong>Position:</strong> @Model.UserPosition</p>
+                    <p><strong>Department:</strong> @Model.UserDepartment</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Actions</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-primary">Profile</a>
+                        <a href="/Logout" class="btn btn-danger">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

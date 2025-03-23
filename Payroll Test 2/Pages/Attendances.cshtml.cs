@@ -28,6 +28,13 @@ namespace Payroll_Test_2.Pages
         public List<Attendance> AttendanceRecords { get; set; }
         public DateTime SelectedDate { get; set; }
         public int EmployeeId { get; set; }
+        public int AttendanceId { get; set; }
+        public Employee Employee { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime? CheckInTime { get; set; }
+        public DateTime? CheckOutTime { get; set; }
+        public DateTime? LunchStartTime { get; set; } // ✅ Added
+        public DateTime? LunchEndTime { get; set; } // ✅ Added
         public string ChartDataJson { get; set; }  // ✅ ADD THIS
 
         public DateTime PreviousDate => SelectedDate.AddDays(-1); // ✅ Added for Previous Day Button
@@ -70,13 +77,29 @@ namespace Payroll_Test_2.Pages
             {
                 Employee = $"{a.Employee?.FirstName} {a.Employee?.LastName}",
                 CheckInTime = a.CheckInTime?.Hour ?? 0,
+                LunchStartTime = a.LunchStartTime?.Hour ?? 0,  // ✅ Added
+                LunchEndTime = a.LunchEndTime?.Hour ?? 0,  // ✅ Added
                 CheckOutTime = a.CheckOutTime?.Hour ?? 24,
-                WorkHours = (a.CheckOutTime?.Hour ?? 24) - (a.CheckInTime?.Hour ?? 0)
+                WorkHours = a.WorkHours
             }).ToList());
 
-
-
             return Page();
+        }
+
+        public double WorkHours
+        {
+            get
+            {
+                if (CheckInTime == null || CheckOutTime == null) return 0;
+                double totalHours = (CheckOutTime.Value - CheckInTime.Value).TotalHours;
+
+                if (LunchStartTime != null && LunchEndTime != null)
+                {
+                    totalHours -= (LunchEndTime.Value - LunchStartTime.Value).TotalHours; // ✅ Deduct lunch time
+                }
+
+                return totalHours;
+            }
         }
     }
 }

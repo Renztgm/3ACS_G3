@@ -20,9 +20,20 @@ namespace Payroll_Test_2.Pages.Models
         public DateTime? CheckInTime { get; set; } // Nullable in case of absence
 
         [DataType(DataType.DateTime)]
+        public DateTime? LunchStartTime { get; set; } // ✅ New: Lunch break start time
+
+        [DataType(DataType.DateTime)]
+        public DateTime? LunchEndTime { get; set; } // ✅ New: Lunch break end time
+
+        [DataType(DataType.DateTime)]
         public DateTime? CheckOutTime { get; set; } // Nullable in case of absence
 
-        public Decimal? WorkHours { get; set; } // Nullable in case of absence (Manually Converted in Query)
+        public decimal? WorkHours { get; set; } // Nullable in case of absence (Manually Converted in Query)
+
+        public decimal? LunchDuration =>
+            (LunchStartTime.HasValue && LunchEndTime.HasValue)
+                ? (decimal)(LunchEndTime.Value - LunchStartTime.Value).TotalHours
+                : (decimal?)null; // ✅ Optional: Auto-calculate lunch duration
 
         [Required]
         public string Status { get; set; } // Present, Absent, Late, etc.

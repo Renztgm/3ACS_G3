@@ -48,12 +48,37 @@
 <div class="chart-container" style="position: relative; height: 400px;">
     <canvas id="attendanceChart"></canvas>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Check-In</th>
+            <th>Lunch Start</th> <!-- ✅ Added -->
+            <th>Lunch End</th> <!-- ✅ Added -->
+            <th>Check-Out</th>
+            <th>Work Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model.AttendanceRecords)
+        {
+            <tr>
+                <td>@record.Employee.FirstName @record.Employee.LastName</td>
+                <td>@record.CheckInTime?.ToString("hh:mm tt")</td>
+                <td>@record.LunchStartTime?.ToString("hh:mm tt")</td> <!-- ✅ Added -->
+                <td>@record.LunchEndTime?.ToString("hh:mm tt")</td> <!-- ✅ Added -->
+                <td>@record.CheckOutTime?.ToString("hh:mm tt")</td>
+                <td>@record.WorkHours</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <!-- Chart.js Script -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
         var ctx = document.getElementById("attendanceChart").getContext("2d");
 
         // Get attendance data from Razor Page
@@ -61,6 +86,9 @@
 
         var labels = attendanceData.map(record => record.Employee);
         var checkInTimes = attendanceData.map(record => record.CheckInTime);
+        var lunchStartTimes = attendanceData.map(record => record.LunchStartTime);
+        var lunchEndTimes = attendanceData.map(record => record.LunchEndTime);
+        var checkOutTimes = attendanceData.map(record => record.CheckOutTime);
         var workDurations = attendanceData.map(record => record.WorkHours);
 
         new Chart(ctx, {
@@ -79,6 +107,13 @@
                         data: workDurations,
                         backgroundColor: "rgba(75, 192, 192, 0.7)",
                         borderColor: "rgba(75, 192, 192, 1)",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "Lunch Break",
+                        data: lunchStartTimes.map((start, index) => lunchEndTimes[index] - start),
+                        backgroundColor: "rgba(255, 99, 132, 0.7)",
+                        borderColor: "rgba(255, 99, 132, 1)",
                         borderWidth: 1
                     }
                 ]
@@ -99,9 +134,9 @@
                         stacked: true,
                         title: { display: false, text: "Employee" }
                     }
-                },  
+                },
                 plugins: {
-                    legend: { display: false },
+                    legend: { display: true },
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
@@ -119,19 +154,17 @@
         });
 
         // Date Picker Navigation
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("goToDate").addEventListener("click", function () {
-                var datePicker = document.getElementById("datePicker");
-                if (!datePicker) return; // Ensure date picker exists
+        document.getElementById("goToDate").addEventListener("click", function () {
+            var datePicker = document.getElementById("datePicker");
+            if (!datePicker) return; // Ensure date picker exists
 
-                var selectedDate = datePicker.value;
-                var employeeId = "@Model.EmployeeId"; // Employee ID from Razor
+            var selectedDate = datePicker.value;
+            var employeeId = "@Model.EmployeeId"; // Employee ID from Razor
 
-                if (selectedDate) {
-                    var formattedDate = new Date(selectedDate).toISOString().split("T")[0]; // Ensure correct format
-                    window.location.href = `/Attendances?id=${employeeId}&date=${formattedDate}`;
-                }
-            });
+            if (selectedDate) {
+                var formattedDate = new Date(selectedDate).toISOString().split("T")[0]; // Ensure correct format
+                window.location.href = `/Attendances?id=${employeeId}&date=${formattedDate}`;
+            }
         });
     });
 </script>
