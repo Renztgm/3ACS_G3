@@ -8,7 +8,7 @@ namespace Payroll_Test_2.Pages.Models
     [Table("positions")] // Maps to the database table "positions"
     public class Position
     {
-        [Key]
+        [NotMapped]
         [Column("PositionID")]
         public int PositionId { get; set; }
 

@@ -40,12 +40,12 @@ namespace Payroll_Test_2.Pages
 
             // Load all departments and positions for filtering
             Departments = await _context.Departments.ToListAsync();
-            Positions = await _context.Positions.ToListAsync();
+            //Positions = await _context.Positions.ToListAsync();
 
             // Query employees from the database
             var query = _context.Employees
                 .Include(e => e.Department)
-                .Include(e => e.Position)
+                //.Include(e => e.Position)
                 .AsQueryable();
 
             // Apply database-supported filters
@@ -66,11 +66,11 @@ namespace Payroll_Test_2.Pages
                 query = query.Where(e => e.Department.DepartmentId == SelectedDepartment);
             }
 
-            // Apply position filter
-            if (SelectedPosition.HasValue)
-            {
-                query = query.Where(e => e.Position.PositionId == SelectedPosition);
-            }
+            //// Apply position filter
+            //if (SelectedPosition.HasValue)
+            //{
+            //    query = query.Where(e => e.Position.PositionId == SelectedPosition);
+            //}
 
             // Retrieve the filtered list from the database
             var employeesList = await query.ToListAsync();

@@ -17,11 +17,9 @@ namespace Payroll_Test_2.Pages.Models
         [StringLength(100)]
         public string DepartmentName { get; set; }
 
-        [Column("CreatedAt")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Column("UpdatedAt")]
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        [Required]
+        [Column("ManagerID")]
+        public int ManagerId { get; set; }
 
         // Navigation Property - One Department can have many Employees
         public ICollection<Employee> Employees { get; set; }

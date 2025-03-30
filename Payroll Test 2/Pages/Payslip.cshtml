@@ -1,0 +1,187 @@
+﻿@page
+@model Payroll_Test_2.Pages.PayslipModel
+@{
+    ViewData["Title"] = "Payslip - Excel Style";
+}
+
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/payroll.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .payslip-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            margin: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .payslip-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+            .payslip-header h1 {
+                margin: 0;
+                font-size: 2.5em;
+            }
+
+        .company-name, .company-address {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .employee-info, .earnings-deductions {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            table td {
+                padding: 10px;
+                text-align: left;
+                font-size: 1.1em;
+            }
+
+                table td:nth-child(2) {
+                    text-align: right;
+                }
+
+                table td strong {
+                    font-size: 1.2em;
+                }
+
+            table.excel-style {
+                border: 1px solid #ddd;
+            }
+
+                table.excel-style td {
+                    border-top: 1px solid #ddd;
+                    border-bottom: 1px solid #ddd;
+                }
+
+            table .header {
+                background-color: #f0f0f0;
+                font-weight: bold;
+                text-align: center;
+            }
+
+        footer.payslip-footer {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="payslip-container">
+        <header class="payslip-header">
+            <h1>PAYSIP</h1>
+            <p class="company-name">Company Name</p>
+            <p class="company-address">Company Address</p>
+        </header>
+
+        <div class="employee-info">
+            <h2>Employee Information</h2>
+            <table>
+                <tr>
+                    <td>Employee Name:</td>
+                    <td>@Model.Payroll.Employee.FirstName @Model.Payroll.Employee.LastName</td>
+                </tr>
+                <tr>
+                    <td>Employee ID:</td>
+                    <td>@Model.Payroll.Employee.EmployeeId</td>
+                </tr>
+                <tr>
+                    <td>Designation:</td>
+                    <td>@Model.Payroll.Employee.Department</td>
+                </tr>
+                <tr>
+                    <td>Department:</td>
+                    <td>@Model.Payroll.Employee.Department</td>
+                </tr>
+                <tr>
+                    <td>Period:</td>
+                    <td>@Model.Payroll.PayrollEndDate.ToString("MMMM yyyy")</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="earnings-deductions">
+            <h2>Earnings and Deductions</h2>
+            <table class="excel-style">
+                <tr>
+                    <td class="header">Description</td>
+                    <td class="header">Amount</td>
+                </tr>
+                <tr>
+                    <td>Basic Salary:</td>
+                    <td>₱@Model.Payroll.GrossSalary.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td>Overtime Pay:</td>
+                    <td>₱@Model.Payroll.OvertimePay.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td>Bonuses:</td>
+                    <td>₱@Model.Payroll.Bonuses.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td><strong>Gross Salary:</strong></td>
+                    <td><strong>₱@Model.Payroll.GrossSalary.ToString("N2")</strong></td>
+                </tr>
+                <tr>
+                    <td>SSS Deduction:</td>
+                    <td>-₱@Model.Payroll.Deductions?.SSS.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td>Pag-IBIG Deduction:</td>
+                    <td>-₱@Model.Payroll.Deductions?.Pagibig.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td>TIN Deduction:</td>
+                    <td>-₱@Model.Payroll.Deductions?.TIN.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td>PhilHealth Deduction:</td>
+                    <td>-₱@Model.Payroll.Deductions?.Philhealth.ToString("N2")</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Deductions:</strong></td>
+                    <td><strong>-₱@Model.Payroll.TotalDeduction.ToString("N2")</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Net Salary:</strong></td>
+                    <td><strong>₱@Model.Payroll.NetSalary.ToString("N2")</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <footer class="payslip-footer">
+            <p>Thank you for your hard work!</p>
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -21,15 +21,15 @@
                 }
             </select>
         </div>
-        <div class="col-md-3">
-            <select class="form-control" asp-for="SelectedPosition">
-                <option value="">All Positions</option>
-                @foreach (var pos in Model.Positions)
-                {
-                    <option value="@pos.PositionId">@pos.PositionName</option>
-                }
-            </select>
-        </div>
+        @* <div class="col-md-3"> *@
+        @*     <select class="form-control" asp-for="SelectedPosition"> *@
+        @*         <option value="">All Positions</option> *@
+        @*         @foreach (var pos in Model.Positions) *@
+        @*         { *@
+        @*             <option value="@pos.PositionId">@pos.PositionName</option> *@
+        @*         } *@
+        @*     </select> *@
+        @* </div> *@
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Filter</button>
         </div>
@@ -42,7 +42,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Department</th>
-                <th>Position</th>
+                @* <th>Position</th> *@
                 @* <th>Actions</th> *@
             </tr>
         </thead>
@@ -53,7 +53,7 @@
                     <td>@employee.EmployeeId</td>
                     <td>@employee.FirstName @employee.LastName</td>
                     <td>@employee.Department.DepartmentName</td>
-                    <td>@employee.Position.PositionName</td>
+                    @* <td>@employee.Position.PositionName</td> *@
                     @* <td> *@
                     @*     <a asp-page="/Employees/Edit" asp-route-id="@employee.EmployeeId" class="btn btn-warning btn-sm">Edit</a> *@
                     @*     <a asp-page="/Employees/Details" asp-route-id="@employee.EmployeeId" class="btn btn-info btn-sm">View</a> *@

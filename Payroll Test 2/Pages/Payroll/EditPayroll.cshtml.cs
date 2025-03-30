@@ -58,14 +58,14 @@ namespace Payroll_Test_2.Pages.Payroll
             }
 
             existingPayroll.EmployeeID = Payroll.EmployeeID;
-            existingPayroll.BasicSalary = Payroll.BasicSalary;
+            existingPayroll.GrossSalary = Payroll.GrossSalary;
             existingPayroll.TotalHoursWorked = Payroll.TotalHoursWorked;
             existingPayroll.OvertimeHours = Payroll.OvertimeHours;
             existingPayroll.OvertimePay = Payroll.OvertimePay;
             existingPayroll.Deductions = Payroll.Deductions;
             existingPayroll.Bonuses = Payroll.Bonuses;
-            existingPayroll.PayrollDate = Payroll.PayrollDate;
-            existingPayroll.NetSalary = Payroll.BasicSalary + Payroll.OvertimePay + Payroll.Bonuses - Payroll.Deductions;
+            existingPayroll.PayrollEndDate = Payroll.PayrollEndDate;
+            existingPayroll.NetSalary = Payroll.NetSalary;
 
             await _context.SaveChangesAsync();
 

@@ -24,7 +24,7 @@ namespace Payroll_Test_2.Data
         public string Username { get; set; }
 
         [Required]
-        [Column("PasswordHash")]
+        [Column("Password")]
         public string PasswordHash { get; set; }
 
         [Column("LastLogin")]

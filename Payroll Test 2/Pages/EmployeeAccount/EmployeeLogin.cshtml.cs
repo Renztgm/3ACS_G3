@@ -42,7 +42,7 @@ public class EmployeeLoginModel : PageModel
 
         var user = _context.Logins
             .Include(l => l.Employee)
-            .ThenInclude(e => e.Position) // ✅ Include Position details
+            //.ThenInclude(e => e.Position) // ✅ Include Position details
             .Include(l => l.Employee.Department) // ✅ Include Department details
             .FirstOrDefault(l => l.Username == Credential.Username
                               && l.PasswordHash == Credential.Password); // ⚠ Plain-text check (not secure)
@@ -53,11 +53,11 @@ public class EmployeeLoginModel : PageModel
             return Page();
         }
 
-        if (user.Employee.RoleId != 3)
-        {
-            ErrorMessage = "Access denied. Only employees can log in.";
-            return Page();
-        }
+        //if (user.Employee.RoleId != 3)
+        //{
+        //    ErrorMessage = "Access denied. Only employees can log in.";
+        //    return Page();
+        //}
 
         // ✅ Update LastLogin timestamp
         user.LastLogin = DateTime.UtcNow;
@@ -66,7 +66,7 @@ public class EmployeeLoginModel : PageModel
         // ✅ Store User Info in Session
         HttpContext.Session.SetInt32("EmployeeID", user.Employee.EmployeeId);
         HttpContext.Session.SetString("UserName", user.Employee.FirstName);
-        HttpContext.Session.SetString("UserPosition", user.Employee.Position?.PositionName ?? "N/A");
+        //HttpContext.Session.SetString("UserPosition", user.Employee.Position?.PositionName ?? "N/A");
         HttpContext.Session.SetString("UserDepartment", user.Employee.Department?.DepartmentName ?? "N/A");
 
         return RedirectToPage("/EmployeeAccount/EmployeeDashboard"); // ✅ Redirect after successful login

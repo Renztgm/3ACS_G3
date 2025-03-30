@@ -29,14 +29,14 @@ namespace Payroll_Test_2.Pages.Models
         [Column("PhoneNumber")]
         public string PhoneNumber { get; set; }
 
-        [Column("DateOfBirth")]
+        [NotMapped]
         public DateTime? DateOfBirth { get; set; }
 
-        [Required]
-        [Column("Gender")]
+        [NotMapped]
+        //[Column("Gender")]
         public string Gender { get; set; }
 
-        [Column("Address")]
+        [NotMapped]
         public string Address { get; set; }
 
         [Required]
@@ -45,40 +45,36 @@ namespace Payroll_Test_2.Pages.Models
         public int DepartmentId { get; set; }
         public Department Department { get; set; } // Navigation Property
 
-        [Required]
-        [ForeignKey("Position")]
-        [Column("PositionID")]
-        public int PositionId { get; set; }
-        public Position Position { get; set; } // Navigation Property
+
+        //[NotMapped]
+        //public int PositionId { get; set; }
+        //public Position Position { get; set; } // Navigation Property
+
+        //[Required]
+        //[ForeignKey("Role")]
+        //[Column("RoleID")]
+        //public int RoleId { get; set; }
+        //public Role Role { get; set; } // Navigation Property
 
         [Required]
-        [ForeignKey("Role")]
-        [Column("RoleID")]
-        public int RoleId { get; set; }
-        public Role Role { get; set; } // Navigation Property
-
-        [Required]
-        [Column("HireDate")]
+        [Column("DateHired")]
         public DateTime HireDate { get; set; }
 
         [Required]
-        [Column("EmploymentStatus")]
+        [Column("Status")]
         public string EmploymentStatus { get; set; } = "Active";
 
-        [Required]
-        [Column("Salary")]
-        public decimal Salary { get; set; }
+        //[ForeignKey("Supervisor")]
+        //[Column("SupervisorID")]
 
-        [ForeignKey("Supervisor")]
-        [Column("SupervisorID")]
-        public int? SupervisorId { get; set; }
-        public Employee Supervisor { get; set; } // Self-referencing Navigation Property
+        //public int? SupervisorId { get; set; }
+        //public Employee Supervisor { get; set; } // Self-referencing Navigation Property
 
-        [Column("CreatedAt")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        //[Column("CreatedAt")]
+        //public DateTime CreatedAt { get; set; }
 
-        [Column("UpdatedAt")]
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        //[Column("UpdatedAt")]
+        //public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
         public ICollection<Login> Logins { get; set; } // Navigation Property
     }
