@@ -1,0 +1,25 @@
+﻿@page
+@model Step2_CalculateWorkedHoursModel
+@{
+    ViewData["Title"] = "Step 2: Calculate Worked Hours";
+}
+
+<h2>Step 2: Calculate Worked Hours</h2>
+
+<table border="1">
+    <tr>
+        <th>Employee</th>
+        <th>Worked Hours</th>
+    </tr>
+    @foreach (var employee in Model.EmployeeWorkData)
+    {
+        <tr>
+            <td>@employee.FullName</td>
+            <td>@employee.WorkedHours</td>
+        </tr>
+    }
+</table>
+
+<form method="post">
+    <button type="submit">Next</button>
+</form>

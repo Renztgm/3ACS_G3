@@ -68,7 +68,7 @@
                 <td>@record.LunchStartTime?.ToString("hh:mm tt")</td> <!-- ✅ Added -->
                 <td>@record.LunchEndTime?.ToString("hh:mm tt")</td> <!-- ✅ Added -->
                 <td>@record.CheckOutTime?.ToString("hh:mm tt")</td>
-                <td>@record.WorkHours</td>
+                <td>@(record.CheckOutTime.HasValue && record.CheckInTime.HasValue ? (record.CheckOutTime.Value - record.CheckInTime.Value).TotalHours.ToString("0.00") : "N/A")</td>
             </tr>
         }
     </tbody>

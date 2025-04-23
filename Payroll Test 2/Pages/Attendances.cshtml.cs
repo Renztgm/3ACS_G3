@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Data;
 using Payroll_Test_2.Pages.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging; // Add this
+using Microsoft.Extensions.Logging;
+using Payroll_Test_2.Pages.Data; // Add this
 
 namespace Payroll_Test_2.Pages
 {
@@ -59,13 +59,13 @@ namespace Payroll_Test_2.Pages
 
 
 
-            var attendanceQuery = _context.Attendances
+            var attendanceQuery = _context.Attendance
                 .Include(a => a.Employee)
                 .Where(a => a.Date.Date == SelectedDate.Date && a.Employee.EmployeeId == id);
 
 
             // ✅ Ensure correct date filtering
-            AttendanceRecords = await _context.Attendances
+            AttendanceRecords = await _context.Attendance
                 .Include(a => a.Employee)
                 .Where(a => a.Date.Date == SelectedDate.Date && a.Employee.EmployeeId == EmployeeId)
                 .ToListAsync();
@@ -80,25 +80,18 @@ namespace Payroll_Test_2.Pages
                 LunchStartTime = a.LunchStartTime?.Hour ?? 0,  // ✅ Added
                 LunchEndTime = a.LunchEndTime?.Hour ?? 0,  // ✅ Added
                 CheckOutTime = a.CheckOutTime?.Hour ?? 24,
-                WorkHours = a.WorkHours
+                WorkHours = WorkHourss
             }).ToList());
 
             return Page();
         }
 
-        public double WorkHours
+        public double WorkHourss
         {
             get
             {
                 if (CheckInTime == null || CheckOutTime == null) return 0;
-                double totalHours = (CheckOutTime.Value - CheckInTime.Value).TotalHours;
-
-                if (LunchStartTime != null && LunchEndTime != null)
-                {
-                    totalHours -= (LunchEndTime.Value - LunchStartTime.Value).TotalHours; // ✅ Deduct lunch time
-                }
-
-                return totalHours;
+                return (CheckOutTime.Value - CheckInTime.Value).TotalHours;
             }
         }
     }

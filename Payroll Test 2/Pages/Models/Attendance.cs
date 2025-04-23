@@ -8,15 +8,15 @@ namespace Payroll_Test_2.Pages.Models
     {
         [Key]
         public int AttendanceID { get; set; } // Primary Key
-
-        [Required]
         public int EmployeeID { get; set; } // Foreign Key to Employee
 
-        [Required]
-        [DataType(DataType.Date)]
+        
+        [DataType(DataType.DateTime)]
+        [Column("AttendanceDate")]
         public DateTime Date { get; set; } // The attendance date
 
         [DataType(DataType.DateTime)]
+        [Column("TimeIn")]
         public DateTime? CheckInTime { get; set; } // Nullable in case of absence
 
         [DataType(DataType.DateTime)]
@@ -26,21 +26,22 @@ namespace Payroll_Test_2.Pages.Models
         public DateTime? LunchEndTime { get; set; } // ✅ New: Lunch break end time
 
         [DataType(DataType.DateTime)]
+        [Column("TimeOut")]
         public DateTime? CheckOutTime { get; set; } // Nullable in case of absence
 
-        public decimal? WorkHours { get; set; } // Nullable in case of absence (Manually Converted in Query)
+        //public decimal? WorkHours { get; set; } // Nullable in case of absence (Manually Converted in Query)
 
         public decimal? LunchDuration =>
             (LunchStartTime.HasValue && LunchEndTime.HasValue)
                 ? (decimal)(LunchEndTime.Value - LunchStartTime.Value).TotalHours
-                : (decimal?)null; // ✅ Optional: Auto-calculate lunch duration
+                : (decimal?)null;
 
-        [Required]
+        
         public string Status { get; set; } // Present, Absent, Late, etc.
 
-        public string? Remarks { get; set; } // Optional comments
+        //public string? Remarks { get; set; } // Optional comments
 
-        [Required]
+        
         public DateTime CreatedAt { get; set; } = DateTime.Now; // Auto-sets when created
 
         public DateTime? UpdatedAt { get; set; } // Nullable, updated only when modified

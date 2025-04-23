@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Payroll_Test_2.Pages.Payroll
 {
-    public class AddPayrollModel : PageModel
+    public class Step3_OvertimeModel : PageModel
     {
         public void OnGet()
         {

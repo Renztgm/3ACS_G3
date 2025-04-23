@@ -1,0 +1,24 @@
+﻿@page
+@model Payroll_Test_2.Pages.Payroll.Step1_SelectCutoffModel
+@{
+    ViewData["Title"] = "Step 1: Select Cutoff Period";
+}
+
+<h2>Step 1: Select Cutoff Period</h2>
+
+<form method="post">
+    <label>Start Date:</label>
+    <input type="date" asp-for="StartDate" required />
+    
+    <label>End Date:</label>
+    <input type="date" asp-for="EndDate" required />
+    
+    <label>Cutoff Type:</label>
+    <select asp-for="CutoffType">
+        <option value="Weekly">Weekly</option>
+        <option value="Bi-Weekly">Bi-Weekly</option>
+        <option value="Monthly">Monthly</option>
+    </select>
+
+    <button type="submit">Next</button>
+</form>

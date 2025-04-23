@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Payroll_Test_2.Pages.Models;
+using Payroll_Test_2.Pages.Data;
 
 namespace Payroll_Test_2.Pages
 {
@@ -22,7 +22,6 @@ namespace Payroll_Test_2.Pages
         {
             PayrollList = await _context.Payroll
             .Include(p => p.Employee)  // Include related Employee details
-            .Include(p => p.Deductions) // Include related Deductions
             .ToListAsync();
         }
     }

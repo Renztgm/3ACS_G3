@@ -16,12 +16,13 @@
     <table class="payroll-table">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Employee</th>
-                <th>Basic Salary</th>
-                <th>Overtime Pay</th>
-                <th>Deductions</th>
-                <th>Net Salary</th>
-                <th>Payroll Date</th>
+                <th>Payroll Cycle</th>
+                <th>Payroll Start Date</th>
+                <th>Payroll End Date</th>
+                <th>-None-</th>
+                <th>-None-</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,14 +30,15 @@
             @foreach (var payroll in Model.PayrollList)
             {
                 <tr>
+                    <td>@payroll.Employee.EmployeeId</td>
                     <td>@(payroll.Employee.FirstName + " " + payroll.Employee.LastName)</td> @* Assuming Employee has a FullName property *@
-                    <td>₱@payroll.GrossSalary.ToString("N2")</td>
-                    <td>₱@payroll.OvertimePay.ToString("N2")</td>
-                    <td>-₱@(payroll.TotalDeduction != null ? payroll.TotalDeduction.ToString("N2") : "0.00")</td>
-                    <td>₱@payroll.NetSalary.ToString("N2")</td>
-                    <td>@payroll.PayrollEndDate.ToString("yyyy-MM-dd")</td>
+                    <td>@payroll.PayrollCycle</td>
+                    <td>@payroll.PayrollStartDate</td>
+                    <td>@payroll.PayrollEndDate</td>
+                    <td>-None-</td>
+                    <td>-None-</td>
                     <td>
-                        <a href="/Payroll/EditPayroll?id=@payroll.PayrollID" class="btn btn-primary">Edit Payroll</a>
+                        <a href="/Payroll/EditPayroll?id=@payroll.PayrollID" class="btn btn-primary">✏️</a>
                         @* <button class="btn btn-download">Download Payslip</button> *@
                         <a asp-page="/Payslip" asp-route-payrollId="@payroll.PayrollID" asp-route-employeeId="@payroll.EmployeeID">View Payslip</a>
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Data;
+using Payroll_Test_2.Pages.Data;
 using System;
 using System.Linq;
 using System.Text.Json;
@@ -30,7 +30,7 @@ namespace Payroll_Test_2.Pages
 
             EmployeeId = id.Value; // Store Employee ID in the model
 
-            var attendanceData = await _context.Attendances
+            var attendanceData = await _context.Attendance
                 .Include(a => a.Employee)
                 .Where(a => a.Employee.EmployeeId == id) // Filter by EmployeeID
                 .Select(a => new

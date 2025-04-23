@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Data;
 using Payroll_Test_2.Pages.Models;
 
-namespace Payroll_Test_2.Pages
+namespace Payroll_Test_2.Pages.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -14,10 +13,10 @@ namespace Payroll_Test_2.Pages
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DbSet<Department> Departments { get; set; }
-        //public DbSet<Position> Positions { get; set; }
-        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Loans> Loans { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Deductions> Deductions { get; set; }
-        public DbSet<Payroll_Test_2.Pages.Models.Payroll> Payroll { get; set; }
+        public DbSet<Models.Payroll> Payroll { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,10 +24,10 @@ namespace Payroll_Test_2.Pages
             modelBuilder.Entity<Employee>().ToTable("Employees");
             modelBuilder.Entity<Login>().ToTable("Logins");
             modelBuilder.Entity<Department>().ToTable("Departments");
-            //modelBuilder.Entity<Position>().ToTable("Positions");
+            modelBuilder.Entity<Loans>().ToTable("Loans");
             modelBuilder.Entity<Attendance>().ToTable("Attendance");
-            modelBuilder.Entity<Deductions>().ToTable("Deductions");
-            modelBuilder.Entity<Payroll_Test_2.Pages.Models.Payroll>().ToTable("Payroll");
+            modelBuilder.Entity<Deductions>().ToTable("Deduction");
+            modelBuilder.Entity<Models.Payroll>().ToTable("Payroll");
         }
     }
 }

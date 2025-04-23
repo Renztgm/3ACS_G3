@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Pages;
-using Payroll_Test_2.Data;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Payroll_Test_2.Pages.Data;
 
 namespace Payroll_Test_2.Controllers
 
@@ -26,7 +25,7 @@ namespace Payroll_Test_2.Controllers
                 date = DateTime.Today; // Default to today if no date is provided
             }
 
-            var attendanceRecords = await _context.Attendances
+            var attendanceRecords = await _context.Attendance
                 .Include(a => a.Employee)
                 .Where(a => a.Date == date)
                 .ToListAsync();

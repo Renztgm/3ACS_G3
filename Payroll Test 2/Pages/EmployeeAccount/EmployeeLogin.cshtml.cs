@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Pages;
+using Payroll_Test_2.Pages.Data;
 
 namespace Payroll_Test_2.Pages.EmployeeAccount
 {

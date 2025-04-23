@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-using Payroll_Test_2.Data;
 
 namespace Payroll_Test_2.Pages.Models
 {

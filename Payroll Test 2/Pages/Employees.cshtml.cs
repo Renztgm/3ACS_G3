@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Payroll_Test_2.Pages.Data;
 using Payroll_Test_2.Pages.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Payroll_Test_2.Pages
 
         public List<Employee> Employees { get; set; } = new List<Employee>();
         public List<Department> Departments { get; set; } = new List<Department>();
-        public List<Position> Positions { get; set; } = new List<Position>();
+        //public List<Position> Positions { get; set; } = new List<Position>();
 
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
@@ -39,12 +40,12 @@ namespace Payroll_Test_2.Pages
             PageNumber = pageNumber ?? 1;
 
             // Load all departments and positions for filtering
-            Departments = await _context.Departments.ToListAsync();
+            //Departments = await _context.Departments.ToListAsync();
             //Positions = await _context.Positions.ToListAsync();
 
             // Query employees from the database
             var query = _context.Employees
-                .Include(e => e.Department)
+                //.Include(e => e.Department)
                 //.Include(e => e.Position)
                 .AsQueryable();
 

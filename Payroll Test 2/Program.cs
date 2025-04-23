@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Pages;
+using Payroll_Test_2.Pages.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

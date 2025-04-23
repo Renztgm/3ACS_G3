@@ -128,55 +128,55 @@
             </table>
         </div>
 
-        <div class="earnings-deductions">
-            <h2>Earnings and Deductions</h2>
-            <table class="excel-style">
-                <tr>
-                    <td class="header">Description</td>
-                    <td class="header">Amount</td>
-                </tr>
-                <tr>
-                    <td>Basic Salary:</td>
-                    <td>₱@Model.Payroll.GrossSalary.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td>Overtime Pay:</td>
-                    <td>₱@Model.Payroll.OvertimePay.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td>Bonuses:</td>
-                    <td>₱@Model.Payroll.Bonuses.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td><strong>Gross Salary:</strong></td>
-                    <td><strong>₱@Model.Payroll.GrossSalary.ToString("N2")</strong></td>
-                </tr>
-                <tr>
-                    <td>SSS Deduction:</td>
-                    <td>-₱@Model.Payroll.Deductions?.SSS.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td>Pag-IBIG Deduction:</td>
-                    <td>-₱@Model.Payroll.Deductions?.Pagibig.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td>TIN Deduction:</td>
-                    <td>-₱@Model.Payroll.Deductions?.TIN.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td>PhilHealth Deduction:</td>
-                    <td>-₱@Model.Payroll.Deductions?.Philhealth.ToString("N2")</td>
-                </tr>
-                <tr>
-                    <td><strong>Total Deductions:</strong></td>
-                    <td><strong>-₱@Model.Payroll.TotalDeduction.ToString("N2")</strong></td>
-                </tr>
-                <tr>
-                    <td><strong>Net Salary:</strong></td>
-                    <td><strong>₱@Model.Payroll.NetSalary.ToString("N2")</strong></td>
-                </tr>
-            </table>
-        </div>
+        @* <div class="earnings-deductions"> *@
+        @*     <h2>Earnings and Deductions</h2> *@
+        @*     <table class="excel-style"> *@
+        @*         <tr> *@
+        @*             <td class="header">Description</td> *@
+        @*             <td class="header">Amount</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>Basic Salary:</td> *@
+        @*             <td>₱@Model.Payroll.GrossSalary.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>Overtime Pay:</td> *@
+        @*             <td>₱@Model.Payroll.OvertimePay.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>Bonuses:</td> *@
+        @*             <td>₱@Model.Payroll.Bonus.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td><strong>Gross Salary:</strong></td> *@
+        @*             <td><strong>₱@Model.Payroll.GrossSalary.ToString("N2")</strong></td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>SSS Deduction:</td> *@
+        @*             <td>-₱@Model.Payroll.Deductions?.SSS.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>Pag-IBIG Deduction:</td> *@
+        @*             <td>-₱@Model.Payroll.Deductions?.Pagibig.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>TIN Deduction:</td> *@
+        @*             <td>-₱@Model.Payroll.Deductions?.TIN.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td>PhilHealth Deduction:</td> *@
+        @*             <td>-₱@Model.Payroll.Deductions?.Philhealth.ToString("N2")</td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td><strong>Total Deductions:</strong></td> *@
+        @*             <td><strong>-₱@Model.Payroll.TotalDeduction.ToString("N2")</strong></td> *@
+        @*         </tr> *@
+        @*         <tr> *@
+        @*             <td><strong>Net Salary:</strong></td> *@
+        @*             <td><strong>₱@Model.Payroll.NetSalary.ToString("N2")</strong></td> *@
+        @*         </tr> *@
+        @*     </table> *@
+        @* </div> *@
 
         <footer class="payslip-footer">
             <p>Thank you for your hard work!</p>
