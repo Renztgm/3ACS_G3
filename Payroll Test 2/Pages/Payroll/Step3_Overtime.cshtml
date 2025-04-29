@@ -1,4 +1,35 @@
 ﻿@page
-@model Payroll_Test_2.Pages.Payroll.Step3_OvertimeModel
+@model Step3_OvertimeModel
 @{
+    ViewData["Title"] = "Step 3: Overtime Summary";
+}
+
+<h2>Overtime Summary for @Model.Cycle</h2>
+<p>Period: @Model.StartDate.ToString("MMM dd, yyyy") - @Model.EndDate.ToString("MMM dd, yyyy")</p>
+
+@if (Model.EmployeeAttendanceData != null && Model.EmployeeAttendanceData.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Total Worked Hours</th>
+                <th>Days Present</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model.EmployeeAttendanceData)
+            {
+                <tr>
+                    <td>@emp.FullName</td>
+                    <td>@emp.TotalWorkedHours:F2</td>
+                    <td>@emp.AttendanceRecords.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No attendance data found.</p>
 }

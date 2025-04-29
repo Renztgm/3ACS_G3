@@ -1,25 +1,56 @@
 ﻿@page
 @model Step2_CalculateWorkedHoursModel
 @{
-    ViewData["Title"] = "Step 2: Calculate Worked Hours";
+    ViewData["Title"] = "Employee Worked Hours";
 }
 
-<h2>Step 2: Calculate Worked Hours</h2>
+<h3>Worked Hours (From @Model.StartDate.ToString("MM/dd/yyyy") to @Model.EndDate.ToString("MM/dd/yyyy") - @Model.Cycle) </h3>
+<p>This page is for Getting the Worked hours of the employees.</p>
 
-<table border="1">
-    <tr>
-        <th>Employee</th>
-        <th>Worked Hours</th>
-    </tr>
-    @foreach (var employee in Model.EmployeeWorkData)
-    {
-        <tr>
-            <td>@employee.FullName</td>
-            <td>@employee.WorkedHours</td>
-        </tr>
-    }
-</table>
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}
 
-<form method="post">
-    <button type="submit">Next</button>
-</form>
+@if (Model.EmployeeAttendanceData.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Full Name</th>
+                <th>Total Worked Hours</th>
+                <th>Attendance Records</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.EmployeeAttendanceData)
+            {
+                <tr>
+                    <td>@employee.EmployeeID</td>
+                    <td>@employee.FullName</td>
+                    <td>@employee.TotalWorkedHours.ToString("F2")</td> <!-- Display worked hours with 2 decimal points -->
+                    <td>
+                        <ul>
+                            @foreach (var record in employee.AttendanceRecords)
+                            {
+                                <li>@record.CheckInTime?.ToString("MM/dd/yyyy HH:mm") - @record.CheckOutTime?.ToString("HH:mm")</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form method="post" asp-page-handler="Submit">
+        <input type="text" asp-for="Cycle" />
+        <button type="submit" class="btn btn-success">Next</button>
+    </form>
+
+}
+else
+{
+    <p>No data to display for the selected date range.</p>
+}

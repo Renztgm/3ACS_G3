@@ -9,15 +9,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add Razor Pages
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages()
+    .AddSessionStateTempDataProvider()
+    .AddNewtonsoftJson();// Enable TempData for session
+
 
 // ✅ Add Authentication & Authorization
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Login"; // Redirect to login if not authenticated
+        options.LoginPath = "/TestPayroll"; // Redirect to login if not authenticated
         options.AccessDeniedPath = "/AccessDenied"; // Redirect if user lacks permission
     });
+
+builder.Services
+    .AddControllersWithViews()
+    .AddNewtonsoftJson();
 
 builder.Services.AddAuthorization();
 

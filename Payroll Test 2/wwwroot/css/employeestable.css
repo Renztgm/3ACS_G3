@@ -1,0 +1,109 @@
+﻿/* Container spacing */
+.container {
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+/* Headings */
+h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+/* Form styles */
+form.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+form .col-md-4,
+form .col-md-3,
+form .col-md-2 {
+    flex: 1;
+    min-width: 200px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+thead {
+    background-color: #343a40;
+    color: white;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+td:hover {
+/*    background-color: #f1f1f1;*/
+    cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    padding-left: 0;
+}
+
+.page-item {
+    display: inline;
+}
+
+.page-link {
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+    .page-link:hover {
+        background-color: #e9ecef;
+    }
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}

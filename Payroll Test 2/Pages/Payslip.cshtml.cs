@@ -21,7 +21,6 @@ namespace Payroll_Test_2.Pages
         {
             Payroll = _context.Payroll
                 .Include(p => p.Employee)
-                //.Include(p => p.Deductions)
                 .FirstOrDefault(p => p.PayrollID == PayrollID && p.EmployeeID == EmployeeID);
 
             if (Payroll == null)

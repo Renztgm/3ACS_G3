@@ -1,0 +1,132 @@
+﻿@page
+@model TestPayrollModel
+@{
+    ViewData["Title"] = "Payroll Processing";
+    Layout = "_Layout";
+}
+
+
+
+<div class="container mt-4">
+    <h2>Payroll Processing</h2>
+
+    <div class="progress mb-4">
+        <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 33%;">
+            Step 1 of 3
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <!-- Step 1 -->
+        <div id="step1" class="tab-pane active">
+            <h3>Step 1: Select Date Range</h3>
+            <form id="dateSelectionForm" onsubmit="return showStep2FromForm();">
+                @Html.AntiForgeryToken()
+                <div class="form-group row mb-3">
+                    <label class="col-sm-2 col-form-label">Start Date:</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="startDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <label class="col-sm-2 col-form-label">End Date:</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="endDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                    </div>
+                </div>
+
+                <div class="form-group row mb-3">
+                    <label class="col-sm-2 col-form-label">Cutoff Type:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="cycle" required>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-Weekly">Bi-Weekly</option>
+                            <option value="Monthly">Monthly</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="showStep2FromForm()">Next</button>
+            </form>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="step2" class="tab-pane">
+            <h3>Step 2: Employee Worked Hours</h3>
+            <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+
+            <!-- Add this wrapper for the data table -->
+            <div id="workedHoursData" style="display: none;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Full Name</th>
+                            <th>Total Worked Hours</th>
+                            @* <th>ScheduledWorkHours</th> *@
+                            <th>OvertimeHours</th>
+                            <th>Leaves</th>
+                            <th>Bonuses</th>
+                            <th>Gross Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeWorkedHoursBody"></tbody>
+                </table>
+            </div>
+
+            <!-- Add this message when there's no data -->
+            <div id="noDataMessage" class="alert alert-warning" style="display: none;">
+                No worked hours data found for the selected date range.
+            </div>
+
+            <button class="btn btn-secondary" onclick="showStep1()">Back</button>
+            <button class="btn btn-primary" onclick="showStep3()">Next</button>
+        </div>
+
+
+        <!-- Step 3 -->
+        <div id="step3" class="tab-pane">
+            <h3>Step 3: Overtime Summary</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Total Worked Hours</th>
+                        <th>Overtime Hours</th>
+                        <th>SSS Deduction</th>
+                        <th>Pagibig Deduction</th>
+                        <th>Philhealth Deduction</th>
+                        <th>TIN Deduction</th>
+                        <th>HMO Deduction</th>
+                        <th>Loan Deduction</th>
+                        <th>Total Deductions</th>
+                        <th>Net Salary</th>
+                    </tr>
+                </thead>
+                <tbody id="overtimeSummaryBody"></tbody>
+            </table>
+            <button class="btn btn-secondary" onclick="showStep2()">Back</button>
+            <button class="btn btn-primary" onclick="showStep4()">Next</button>
+        </div>
+
+
+        <div id="step4" class="tab-pane">
+            <h2>Payroll Summary</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Total Gross Salary</th>
+                        <th>Total Deductions</th>
+                        <th>Total Net Salary</th>
+                    </tr>
+                </thead>
+                <tbody id="summaryTableBody">
+                    <!-- Summary will be inserted here dynamically -->
+                </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="savePayroll()">Generate Payroll</button>
+        </div>
+
+    </div>
+</div>
+<link rel="stylesheet" href="~/css/payroll.css" />
+<script src="~/js/payroll.js"></script>

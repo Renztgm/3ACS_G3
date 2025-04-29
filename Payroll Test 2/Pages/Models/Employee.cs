@@ -28,6 +28,11 @@ namespace Payroll_Test_2.Pages.Models
         [Column("PhoneNumber")]
         public string PhoneNumber { get; set; }
 
+        [Column("Salary")]
+        public decimal Salary { get; set; }
+        [Column("SalaryType")]
+        public string SalaryType { get; set; } // Monthly, Hourly, etc.
+
         [NotMapped]
         public DateTime? DateOfBirth { get; set; }
 

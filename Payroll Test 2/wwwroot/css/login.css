@@ -1,0 +1,56 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background-color: #dae8e4;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.card-login {
+    padding: 20px;
+    border: solid 1px white;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.label-input{
+}
+
+input[type="text"],[type="password"] {
+    width: 300px;
+    height: 30px;
+    border: solid 1px #808080;
+
+}
+
+.login-btn {
+    margin-top: 10px;
+    width: 300px;
+    color: white;
+    background-color: #233b58;
+    height: 30px;
+
+}
+
+.text-danger {
+    color: red;
+}
+.alert-danger {
+    color: red;
+}
+
+.text-center a{
+    text-decoration: none;
+    color: black;
+}

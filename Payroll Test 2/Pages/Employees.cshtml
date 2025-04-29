@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "List of Employees";
 }
+<link rel="stylesheet" href="~/css/employeestable.css" asp-append-version="true"/>
 
 <div class="container mt-4">
     <h2 class="mb-4">List of Employees</h2>
@@ -21,15 +22,6 @@
                 }
             </select>
         </div>
-        @* <div class="col-md-3"> *@
-        @*     <select class="form-control" asp-for="SelectedPosition"> *@
-        @*         <option value="">All Positions</option> *@
-        @*         @foreach (var pos in Model.Positions) *@
-        @*         { *@
-        @*             <option value="@pos.PositionId">@pos.PositionName</option> *@
-        @*         } *@
-        @*     </select> *@
-        @* </div> *@
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Filter</button>
         </div>

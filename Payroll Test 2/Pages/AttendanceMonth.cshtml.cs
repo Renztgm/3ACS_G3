@@ -38,7 +38,7 @@ namespace Payroll_Test_2.Pages
                     Id = a.AttendanceID,
                     EmployeeId = a.Employee.EmployeeId, // Include Employee ID
                     Name = a.Employee.FirstName + " " + a.Employee.LastName,
-                    Date = a.Date.ToString("yyyy-MM-dd"),
+                    Date = a.Date.HasValue ? a.Date.Value.ToString("yyyy-MM-dd") : "N/A",
                     Present = a.CheckInTime != null,
                     Time = a.CheckInTime != null
                         ? a.CheckInTime.Value.ToString("HH:mm") + " - " + (a.CheckOutTime.HasValue ? a.CheckOutTime.Value.ToString("HH:mm") : "N/A")

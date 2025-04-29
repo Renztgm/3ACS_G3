@@ -2,42 +2,38 @@
 @model Payroll_Test_2.Pages.Account.loginModel
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
+<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
-        <div class="card-body">
-            <h3 class="card-title text-center mb-4">PayrollPro</h3>
-            <p class="text-center text-muted">Enter your credentials to access your account</p>
+<div class="card-login">
+    <h3 class="title-login">PayrollPro</h3>
 
-            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-            {
-                <div class="alert alert-danger" role="alert">
-                    @Model.ErrorMessage
-                </div>
-            }
-
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="mb-3">
-                    <label asp-for="Credential.Username" class="form-label fw-bold">Username</label>
-                    <input type="text" asp-for="Credential.Username" class="form-control" placeholder="Enter your username" />
-                    <span class="text-danger" asp-validation-for="Credential.Username"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Credential.Password" class="form-label fw-bold">Password</label>
-                    <input type="password" asp-for="Credential.Password" class="form-control" placeholder="••••••••" />
-                    <span class="text-danger" asp-validation-for="Credential.Password"></span>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
-
-            <div class="text-center mt-3">
-                <p class="text-muted">Don't have an account? <a href="#" class="text-primary">Contact your administrator</a></p>
-            </div>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert-danger" role="alert">
+            @Model.ErrorMessage
         </div>
+    }
+    <span class="text-danger" asp-validation-for="Credential.Username"></span>
+    <span class="text-danger" asp-validation-for="Credential.Password"></span>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="input-text">
+            <label asp-for="Credential.Username" class="label-input">Username</label>
+            <input type="text" asp-for="Credential.Username" class="" placeholder="Enter your username" />
+        </div>
+
+        <div class="input-text">
+            <label asp-for="Credential.Password" class="label-input">Password</label>
+            <input type="password" asp-for="Credential.Password" class="" placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="text-center">
+        <p class="text-muted">Don't have an account? <a href="#" class="text-primary">Contact your administrator</a></p>
     </div>
 </div>

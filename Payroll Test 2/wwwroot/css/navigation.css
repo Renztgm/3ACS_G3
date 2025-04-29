@@ -1,0 +1,111 @@
+﻿/* Global styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+
+/* Layout */
+.container-fluid {
+    width: 100%;
+}
+
+.row {
+    display: flex;
+/*    flex-wrap: nowrap;
+    min-height: 100vh;*/
+}
+
+/* Sidebar */
+.sidebar {
+    width: 20%;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+    .sidebar h5 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar .nav-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .sidebar .nav-link {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+        .sidebar .nav-link:hover {
+            background-color: #e2e6ea;
+        }
+
+    /* Button styles */
+    .sidebar .btn {
+        display: block;
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border-radius: 4px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+
+.btn-outline-danger {
+    background-color: transparent;
+    border: 2px solid #dc3545;
+    color: #dc3545;
+}
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+.btn-outline-primary {
+    background-color: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+/* Main content */
+.main-content {
+    width: 80%;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* Full width if login or error page */
+.full-width {
+    width: 100% !important;
+}
+
+/* Responsive behavior (optional) */
+@media screen and (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .sidebar, .main-content {
+        width: 100% !important;
+    }
+}

@@ -5,16 +5,17 @@
 }
 
 <h2>Step 1: Select Cutoff Period</h2>
+<p>This will be the first step of generating payroll, select the start and end date of the payroll cycle.</p>
 
 <form method="post">
     <label>Start Date:</label>
-    <input type="date" asp-for="StartDate" required />
+    <input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="StartDate" required/>
     
     <label>End Date:</label>
-    <input type="date" asp-for="EndDate" required />
+    <input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="EndDate" required />
     
     <label>Cutoff Type:</label>
-    <select asp-for="CutoffType">
+    <select asp-for="Cycle" required>
         <option value="Weekly">Weekly</option>
         <option value="Bi-Weekly">Bi-Weekly</option>
         <option value="Monthly">Monthly</option>

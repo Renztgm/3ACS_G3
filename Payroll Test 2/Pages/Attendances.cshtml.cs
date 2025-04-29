@@ -57,17 +57,14 @@ namespace Payroll_Test_2.Pages
 
             EmployeeId = id.Value;
 
-
-
             var attendanceQuery = _context.Attendance
                 .Include(a => a.Employee)
-                .Where(a => a.Date.Date == SelectedDate.Date && a.Employee.EmployeeId == id);
-
+                .Where(a => a.Date.HasValue && a.Date.Value.Date == SelectedDate.Date && a.Employee.EmployeeId == id);
 
             // ✅ Ensure correct date filtering
             AttendanceRecords = await _context.Attendance
                 .Include(a => a.Employee)
-                .Where(a => a.Date.Date == SelectedDate.Date && a.Employee.EmployeeId == EmployeeId)
+                .Where(a => a.Date.HasValue && a.Date.Value.Date == SelectedDate.Date && a.Employee.EmployeeId == EmployeeId)
                 .ToListAsync();
 
             _logger.LogInformation($"Fetched {AttendanceRecords.Count} records for Employee ID {EmployeeId} on {SelectedDate:yyyy-MM-dd}");

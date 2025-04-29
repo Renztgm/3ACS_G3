@@ -17,6 +17,7 @@ namespace Payroll_Test_2.Pages.Data
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<Deductions> Deductions { get; set; }
         public DbSet<Models.Payroll> Payroll { get; set; }
+        public DbSet<Bonus> Bonuses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +29,7 @@ namespace Payroll_Test_2.Pages.Data
             modelBuilder.Entity<Attendance>().ToTable("Attendance");
             modelBuilder.Entity<Deductions>().ToTable("Deduction");
             modelBuilder.Entity<Models.Payroll>().ToTable("Payroll");
+            modelBuilder.Entity<Bonus>().ToTable("Bonuses");
         }
     }
 }
