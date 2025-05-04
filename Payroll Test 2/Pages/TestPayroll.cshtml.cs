@@ -1,4 +1,5 @@
 ﻿// Pages/TestPayroll.cshtml.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Payroll_Test_2.Pages.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
+[Authorize]
 [IgnoreAntiforgeryToken]
 public class TestPayrollModel : PageModel
 {
@@ -77,12 +79,6 @@ public class TestPayrollModel : PageModel
                 return (decimal)((a.ScheduledOut.Value - a.ScheduledIn.Value).TotalHours - 1); // Subtract 1 hour
             });
 
-
-
-
-
-
-
         Debug.WriteLine($"ScheduledWorkHours: {scheduledWorkHours}");
 
 
@@ -107,9 +103,6 @@ public class TestPayrollModel : PageModel
             // Apply 25% premium to overtime hours (1.25 represents 100% + 25%)
             return overtime * 1.25m;
         });
-
-
-
 
         // --- Adjust Gross Salary based on selected Cycle (NOT based on SalaryType) ---
         var grossSalary = g.Key.Salary;

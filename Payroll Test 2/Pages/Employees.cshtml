@@ -11,7 +11,7 @@
     <!-- Search & Filters -->
     <form method="get" class="row g-3 mb-4">
         <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Search employees..." asp-for="SearchTerm" />
+            <input type="text" class="form-control" placeholder="Search employees" asp-for="SearchTerm" />
         </div>
         <div class="col-md-3">
             <select class="form-control" asp-for="SelectedDepartment">
@@ -33,7 +33,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                @* <th>Department</th> *@
+                <th>Department</th>
                 @* <th>Position</th> *@
                 @* <th>Actions</th> *@
             </tr>
@@ -44,7 +44,7 @@
                 <tr onclick="selectRow(@employee.EmployeeId)">
                     <td>@employee.EmployeeId</td>
                     <td>@employee.FirstName @employee.LastName</td>
-                    @* <td>@employee.Department.DepartmentName</td> *@
+                    <td>@employee.Department.DepartmentName</td>
                     @* <td>@employee.Position.PositionName</td> *@
                     @* <td> *@  
                     @*     <a asp-page="/Employees/Edit" asp-route-id="@employee.EmployeeId" class="btn btn-warning btn-sm">Edit</a> *@

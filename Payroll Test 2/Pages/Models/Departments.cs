@@ -21,6 +21,20 @@ namespace Payroll_Test_2.Pages.Models
         [Column("ManagerID")]
         public int ManagerId { get; set; }
 
+        [Column("Description")]
+        public string Description { get; set; }
+
+        [Column("Performance")]
+        public decimal Performance { get; set; }
+
+        [Column("DateCreated")]
+        public DateTime DateCreated { get; set; }
+
+        [Column("Budget")]
+        public decimal Budget { get; set; }
+
+        [Column("Status")]
+        public string Status { get; set; }
         // Navigation Property - One Department can have many Employees
         public ICollection<Employee> Employees { get; set; }
     }

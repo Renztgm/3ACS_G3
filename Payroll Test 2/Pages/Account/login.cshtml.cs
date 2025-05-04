@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -39,10 +42,20 @@ namespace Payroll_Test_2.Pages.Account
 
             var user = await _context.Logins
                 .FirstOrDefaultAsync(l => l.Username == Credential.Username && l.PasswordHash == Credential.Password);
-
+            Debug.WriteLine($"login is : {user}");
             if (user != null)
             {
                 HttpContext.Session.SetString("UserName", user.Username);
+
+                var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user.Username),
+                        // Add roles or other claims if needed
+                    };
+                var identity = new ClaimsIdentity(claims, "MyCookieAuth");
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync("MyCookieAuth", principal);
                 return RedirectToPage("/Index");
             }
 

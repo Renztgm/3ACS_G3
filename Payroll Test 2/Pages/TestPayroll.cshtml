@@ -2,7 +2,7 @@
 @model TestPayrollModel
 @{
     ViewData["Title"] = "Payroll Processing";
-    Layout = "_Layout";
+    Layout = "_Layout";  
 }
 
 
@@ -10,7 +10,7 @@
 <div class="container mt-4">
     <h2>Payroll Processing</h2>
 
-    <div class="progress mb-4">
+    <div class="progress">
         <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 33%;">
             Step 1 of 3
         </div>
@@ -22,7 +22,7 @@
             <h3>Step 1: Select Date Range</h3>
             <form id="dateSelectionForm" onsubmit="return showStep2FromForm();">
                 @Html.AntiForgeryToken()
-                <div class="form-group row mb-3">
+                <div class="form-group">
                     <label class="col-sm-2 col-form-label">Start Date:</label>
                     <div class="col-sm-4">
                         <input type="date" class="form-control" id="startDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
@@ -31,9 +31,6 @@
                     <div class="col-sm-4">
                         <input type="date" class="form-control" id="endDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                     </div>
-                </div>
-
-                <div class="form-group row mb-3">
                     <label class="col-sm-2 col-form-label">Cutoff Type:</label>
                     <div class="col-sm-4">
                         <select class="form-control" id="cycle" required>
@@ -43,8 +40,9 @@
                         </select>
                     </div>
                 </div>
-
-                <button type="button" class="btn btn-primary" onclick="showStep2FromForm()">Next</button>
+                <div class="step1button">
+                    <button type="button" class="btn btn-primary" onclick="showStep2FromForm()">Next</button>
+                </div>
             </form>
         </div>
 
@@ -123,10 +121,11 @@
                     <!-- Summary will be inserted here dynamically -->
                 </tbody>
             </table>
+            <button class="btn btn-secondary" onclick="showStep3()">Back</button>
             <button class="btn btn-primary" onclick="savePayroll()">Generate Payroll</button>
         </div>
 
     </div>
 </div>
-<link rel="stylesheet" href="~/css/payroll.css" />
+<link rel="stylesheet" href="~/css/generatepayroll.css" />
 <script src="~/js/payroll.js"></script>

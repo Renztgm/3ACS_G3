@@ -41,13 +41,7 @@
                                 <a class="nav-link" href="/payroll">Payroll</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Payroll/Step1_SelectCutoff">Generate Payroll</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Reports">Reports</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Privacy">Privacy</a>
+                                <a class="nav-link" href="/TestPayroll">Generate Payroll</a>
                             </li>
                         </ul>
 
@@ -70,7 +64,7 @@
             <!-- Main Content -->
             <div class="main-content">
                 <div class="@((Context.Request.Path.Value.Contains("/Account/Login", StringComparison.OrdinalIgnoreCase) || Context.Request.Path.Value.Contains("/Error404", StringComparison.OrdinalIgnoreCase)) ? "col-md-12" : "col-md-10") p-5">
-                    <main role="main" class="pb-3">
+                    <main role="main" class="main-body">
                         @RenderBody()
                     </main>
                 </div>

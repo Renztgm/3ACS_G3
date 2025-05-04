@@ -3,54 +3,68 @@
     padding: 0;
     background-color: #dae8e4;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
+    height: 100vh; /* Ensures content is centered vertically */
 }
 
 .card-login {
     padding: 20px;
-    border: solid 1px white;
+    border: 1px solid white;
     border-radius: 10px;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds subtle depth */
 }
 
 .input-text {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
 }
 
-.label-input{
-}
-
-input[type="text"],[type="password"] {
+input[type="text"],
+input[type="password"] {
     width: 300px;
     height: 30px;
-    border: solid 1px #808080;
-
+    padding: 5px 10px;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .login-btn {
     margin-top: 10px;
-    width: 300px;
+    width: 100%;
     color: white;
     background-color: #233b58;
-    height: 30px;
-
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.text-danger {
-    color: red;
-}
+    .login-btn:hover {
+        background-color: #1a2f45;
+    }
+
+.text-danger,
 .alert-danger {
     color: red;
+    margin-top: 5px;
+    font-size: 14px;
 }
 
-.text-center a{
+.text-center a {
     text-decoration: none;
     color: black;
 }
+
+    .text-center a:hover {
+        text-decoration: underline;
+    }

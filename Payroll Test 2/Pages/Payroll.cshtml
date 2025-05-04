@@ -11,11 +11,11 @@
 
 
     <div class="payroll-actions">
-        <button class="btn btn-export">Export Payroll Data</button>
+        <a asp-page-handler="DownloadCsv" class="btn btn-primary">Export Payroll CSV</a>
     </div>
 
     <h3>Employee Payroll List</h3>
-    <table class="payroll-table">
+    <table class="payroll-table minimal-table styled-table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -23,8 +23,6 @@
                 <th>Payroll Cycle</th>
                 <th>Payroll Start Date</th>
                 <th>Payroll End Date</th>
-                <th>-None-</th>
-                <th>-None-</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -37,8 +35,6 @@
                     <td>@payroll.PayrollCycle</td>
                     <td>@payroll.PayrollStartDate</td>
                     <td>@payroll.PayrollEndDate</td>
-                    <td>-None-</td>
-                    <td>-None-</td>
                     <td>
                         <a href="/Payroll/EditPayroll?id=@payroll.PayrollID" class="btn btn-primary">✏️</a>
                         @* <button class="btn btn-download">Download Payslip</button> *@

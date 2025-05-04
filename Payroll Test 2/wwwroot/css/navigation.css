@@ -4,6 +4,13 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
+    overflow: hidden;
+}
+/* Responsive behavior (optional) */
+@media screen and (max-width: 768px) {
+    body, html {
+        overflow: auto;
+    }
 }
 
 /* Layout */
@@ -92,6 +99,7 @@ body, html {
     width: 80%;
     padding: 2rem;
     box-sizing: border-box;
+    overflow: auto;
 }
 
 /* Full width if login or error page */
@@ -109,3 +117,4 @@ body, html {
         width: 100% !important;
     }
 }
+

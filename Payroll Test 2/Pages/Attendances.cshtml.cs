@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Payroll_Test_2.Pages.Data; // Add this
+using Payroll_Test_2.Pages.Data;
+using Microsoft.AspNetCore.Authorization; // Add this
 
 namespace Payroll_Test_2.Pages
 {
 
-
+    [Authorize]
     public class AttendancesModel : PageModel
     {
         private readonly ApplicationDbContext _context;

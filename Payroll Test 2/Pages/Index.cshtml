@@ -3,39 +3,52 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
+<style>
+    .row-dashboard {
+        display: flex;
+        flex-direction: row;
+       justify-content: space-evenly;
+    }
+    .col-dashboard {
+        
+    }
+    .card-dashboard {
+        text-align: center;
+        border-radius: 10px;
+        border: solid 1px Gray;
+        transition: transform 0.2s;
+        paddng: 20px;
+        width: 20vw;
 
-<h2 class="mb-4">Payroll Dashboard</h2>
-<div class="row">
-    <div class="col-md-4">
-        <div class="card shadow-sm text-center p-3">
+    }
+
+        .card-dashboard:hover {
+            transform: scale(1.05);
+        }
+</style>
+
+
+<h2 class="title-dashboard">Payroll Dashboard</h2>
+<div class="row-dashboard">
+    <div class="col-dashboard">
+        <div class="card-dashboard">
             <h5>Total Employees</h5>
             <h3 class="text-primary">120</h3>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm text-center p-3">
+    <div class="col-dashboard">
+        <div class="card-dashboard">
             <h5>Payroll Processed</h5>
             <h3 class="text-success">$250,000</h3>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card shadow-sm text-center p-3">
+    <div class="col-dashboard">
+        <div class="card-dashboard">
             <h5>Pending Approvals</h5>
             <h3 class="text-danger">5</h3>
         </div>
     </div>
 </div>
-<div class="text-center mt-4">
+<div class="text-dashboard">
     <a href="/TestPayroll" class="btn btn-primary">Manage Payroll</a>
 </div>
-
-<style>
-    .card {
-        border-radius: 10px;
-        transition: transform 0.2s;
-    }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-</style>

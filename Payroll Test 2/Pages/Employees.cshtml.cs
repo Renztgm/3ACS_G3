@@ -40,24 +40,23 @@ namespace Payroll_Test_2.Pages
             PageNumber = pageNumber ?? 1;
 
             // Load all departments and positions for filtering
-            //Departments = await _context.Departments.ToListAsync();
+            Departments = await _context.Departments.ToListAsync();
             //Positions = await _context.Positions.ToListAsync();
 
-            // Query employees from the database
             var query = _context.Employees
-                //.Include(e => e.Department)
-                //.Include(e => e.Position)
+                .Include(e => e.Department)
                 .AsQueryable();
 
-            // Apply database-supported filters
             if (!string.IsNullOrEmpty(SearchTerm))
             {
                 string searchLower = SearchTerm.ToLower();
 
                 query = query.Where(e =>
-                    e.FirstName.ToLower().Contains(searchLower) ||
-                    e.LastName.ToLower().Contains(searchLower) ||
-                    (e.FirstName + " " + e.LastName).ToLower().Contains(searchLower)
+                    EF.Functions.Like(e.FirstName.ToLower(), $"%{searchLower}%") ||
+                    EF.Functions.Like(e.LastName.ToLower(), $"%{searchLower}%") ||
+                    (searchLower.Contains(' ') && (e.FirstName.ToLower() + " " + e.LastName.ToLower()).StartsWith(searchLower, StringComparison.OrdinalIgnoreCase)) ||
+                    EF.Functions.Like((e.FirstName + " " + e.LastName).ToLower(), $"%{searchLower}%") ||
+                    EF.Functions.Like(e.FirstName.ToLower() + " " + (e.LastName != null && e.LastName.Length > 0 ? e.LastName.ToLower().Substring(0, 1) : ""), $"%{searchLower}%")
                 );
             }
 

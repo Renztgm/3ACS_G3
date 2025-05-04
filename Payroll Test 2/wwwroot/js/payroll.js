@@ -1,5 +1,4 @@
-﻿let payrollRecords = []; // <-- Declare globally!
-
+﻿let payrollRecords = [];
 function showStep2FromForm() {
     event.preventDefault();
     fetchWorkedHours();
@@ -30,7 +29,12 @@ function fetchWorkedHours() {
             return response.json();
         })        
         .then(data => {
-            console.log("Received payroll data:", data);
+            if (data.length === 0) {
+                console.log("There are no data in the array");
+            } else {
+                console.log("Array has data");
+                console.log("Received payroll data:", data);
+            }
             payrollRecords = data; // Save globally
             try {
                 if (!Array.isArray(data) || data.length === 0) {
@@ -63,8 +67,8 @@ function fetchWorkedHours() {
                     document.getElementById("workedHoursData").style.display = "block";
                     document.getElementById("noDataMessage").style.display = "none";
                     showStep2();
-                    renderStep3EmployeeTable(data); // <-- Step 3
-                    generateStep4Summary(data);      // <-- Step 4
+                    //renderStep3EmployeeTable(data); // <-- Step 3
+                    generateStep4Summary(data);      // <-- Step 4 this will call the method step 4
                     return data; // <-- ADD THIS LINE!
                 }
             } catch (innerErr) {
@@ -82,6 +86,7 @@ function showStep1() {
     document.getElementById("step1").classList.add("active");
     document.getElementById("step2").classList.remove("active");
     document.getElementById("step3").classList.remove("active");
+    document.getElementById("step4").classList.remove("active");
     updateProgress(25, "Step 1 of 4");
 }
 
@@ -90,18 +95,21 @@ function showStep2() {
     const step1 = document.getElementById("step1");
     const step2 = document.getElementById("step2");
     const step3 = document.getElementById("step3");
+    const step4 = document.getElementById("step4");
 
     // Check if the elements exist to avoid errors
-    if (step1 && step2 && step3) {
+    if (step1 && step2 && step3 && step4) {
         // Change the 'active' class to show Step 2
         step1.classList.remove("active");
         step2.classList.add("active");
         step3.classList.remove("active");
+        step4.classList.remove("active")
 
         // Switch content visibility for steps
-        document.getElementById("step1Content").classList.remove("active");
-        document.getElementById("step2Content").classList.add("active");
-        document.getElementById("step3Content").classList.remove("active");
+        document.getElementById("step1").classList.remove("active");
+        document.getElementById("step2").classList.add("active");
+        document.getElementById("step3").classList.remove("active");
+        document.getElementById("step4").classList.remove("active");
 
         // Update the progress bar (this part is optional)
         updateProgress(50, "Step 2 of 4");
@@ -119,6 +127,7 @@ function showStep3() {
     if (data.length === 0) {
         document.getElementById("noOvertimeDataMessage").style.display = "block";
         document.getElementById("overtimeSummaryData").style.display = "none";
+        document.getElementById("step4").style.display = "none";
         return;
     }
 
@@ -161,10 +170,41 @@ function showStep3() {
         tbody.appendChild(tr);
     });
 
+
+
     document.getElementById("step1").classList.remove("active");
     document.getElementById("step2").classList.remove("active");
     document.getElementById("step3").classList.add("active");
+    document.getElementById("step4").classList.remove("active");
+
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+    const step4 = document.getElementById("step4");
+
+    // Check if the elements exist to avoid errors
+    if (step1 && step2 && step3 && step4) {
+        // Change the 'active' class to show Step 3
+        step1.classList.remove("active");
+        step2.classList.remove("active");
+        step3.classList.add("active");
+        step4.classList.remove("active")
+
+        // Switch content visibility for steps
+        document.getElementById("step1").classList.remove("active");
+        document.getElementById("step2").classList.remove("active");
+        document.getElementById("step3").classList.add("active");
+        document.getElementById("step4").classList.remove("active");
+
+        // Update the progress bar (this part is optional)
+        updateProgress(75, "Step 3 of 4");
+        console.log("the if else statement step3 is working");
+    } else {
+        console.error("One or more step elements not found!");
+    }
+
     updateProgress(75, "Step 3 of 4");
+    console.log("Step3 pressed!");
 }
 
 
@@ -176,6 +216,7 @@ function showStep4() {
     generateStep4Summary(payrollRecords); // <-- Now generate the summary here
 
     updateProgress(100, "Step 4 of 4");
+    console.log("Step4 pressed!");
 }
 
 function generateStep4Summary(records) {

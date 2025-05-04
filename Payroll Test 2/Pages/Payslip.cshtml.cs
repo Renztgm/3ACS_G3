@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Payroll_Test_2.Pages.Data;
 
 namespace Payroll_Test_2.Pages
 {
+    [Authorize]
     public class PayslipModel : PageModel
     {
         private readonly ApplicationDbContext _context;

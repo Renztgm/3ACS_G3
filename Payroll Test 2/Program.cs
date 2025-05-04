@@ -15,11 +15,12 @@ builder.Services.AddRazorPages()
 
 
 // ✅ Add Authentication & Authorization
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+builder.Services.AddAuthentication("MyCookieAuth")
+    .AddCookie("MyCookieAuth", options =>
     {
-        options.LoginPath = "/TestPayroll"; // Redirect to login if not authenticated
-        options.AccessDeniedPath = "/AccessDenied"; // Redirect if user lacks permission
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.Cookie.Name = "MyAppCookie";
     });
 
 builder.Services
@@ -36,6 +37,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddHttpContextAccessor();
 
 builder.Logging.AddConsole(); // Enables logging to Output window
 builder.Logging.AddDebug();   // Enables logging in Debug Output
@@ -55,10 +57,10 @@ app.UseStatusCodePages(async context =>
     }
 });
 
-
+app.UseSession();         // ✅ Enable session
 app.UseAuthentication();  // ✅ Ensure authentication is used
 app.UseAuthorization();   // ✅ Ensure authorization is enforced
-app.UseSession();         // ✅ Enable session
+
 
 // Configure error handling
 if (!app.Environment.IsDevelopment())
