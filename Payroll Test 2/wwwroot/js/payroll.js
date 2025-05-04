@@ -1,17 +1,64 @@
 ﻿let payrollRecords = [];
+
 function showStep2FromForm() {
     event.preventDefault();
+    
+    const startDate = new Date(document.getElementById("startDate").value);
+    const endDate = new Date(document.getElementById("endDate").value);
+    const cycle = document.getElementById("cycle").value;
+
+    const timeDiff = endDate - startDate;
+    const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)+1); // Inclusive
+
+    let isValid = false;
+    let expected = "";
+
+
+    if (cycle === "Weekly") {
+        if (dayDiff === 7) {
+            isValid = true;
+            expected = "7 days (Weekly)";
+        } else {
+            expected = "7 days (Weekly)";
+        }
+    } else if (cycle === "Bi-Weekly") {
+        if (dayDiff === 14 || dayDiff === 15) {
+            isValid = true;
+            expected = "14 or 15 days (Bi-Weekly)";
+        } else {
+            expected = "14 or 15 days (Bi-Weekly)";
+        }
+    } else if (cycle === "Monthly") {
+        if (dayDiff >= 28 && dayDiff <= 31) {
+            isValid = true;
+            expected = "28 to 31 days (Monthly)";
+        } else {
+            expected = "28 to 31 days (Monthly)";
+        }
+    } else {
+        alert("Unknown cycle selected.");
+        return false;
+    }
+
+    // Validation
+    if (!isValid) {
+        alert(`Invalid date range for ${cycle}. Expected duration: ${expected}, but got ${dayDiff} day(s).`);
+        return false;
+    }
+    console.log("Form is valid. Proceeding to Step 2...");
     fetchWorkedHours();
-    return false;   
+    return true;
 }
+
 
 function fetchWorkedHours() {
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
     const cycle = document.getElementById("cycle").value;
     const data = { startDate, endDate, cycle };
-
     const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+    document.getElementById("fetch-loading").style.display = "flex";
+    
 
     fetch('/TestPayroll?handler=GetWorkedHours', {
         method: 'POST',
@@ -21,7 +68,7 @@ function fetchWorkedHours() {
         },
         body: JSON.stringify({ startDate, endDate, cycle })
     })
-
+    
         .then(response => {
             if (!response.ok) {
                 throw new Error("Server error: " + response.statusText);
@@ -31,6 +78,7 @@ function fetchWorkedHours() {
         .then(data => {
             if (data.length === 0) {
                 console.log("There are no data in the array");
+                alert("No Data on selected Date. Please try again!");
             } else {
                 console.log("Array has data");
                 console.log("Received payroll data:", data);
@@ -75,10 +123,14 @@ function fetchWorkedHours() {
                 console.error("Error inside then block:", innerErr);
             }
         })
-        .catch(err => {
-            document.getElementById("errorMessage").innerText = err.message;
-            document.getElementById("errorMessage").style.display = "block";
-        });
+    .catch(err => {
+        document.getElementById("errorMessage").innerText = err.message;
+        document.getElementById("errorMessage").style.display = "block";
+    })
+    .finally(() => {
+        // Hide loading screen after all processing
+        document.getElementById("fetch-loading").style.display = "none";
+    });
 }
 
 
@@ -155,8 +207,6 @@ function showStep3() {
 
         tr.innerHTML = `
             <td>${employeeName}</td>
-            <td>${totalWorkedHours}</td>
-            <td>${overtimeHours}</td>
             <td>${sssDeduction.toFixed(2)}</td>
             <td>${pagibigDeduction.toFixed(2)}</td>
             <td>${philhealthDeduction.toFixed(2)}</td>
@@ -164,9 +214,11 @@ function showStep3() {
             <td>${hmoDeduction.toFixed(2)}</td>
             <td>${loanDeduction.toFixed(2)}</td>
             <td>${totalDeductions.toFixed(2)}</td>
-            <td>${netSalary.toFixed(2)}</td>
+            
         `;
-
+        //<td>${totalWorkedHours}</td>
+        //<td>${overtimeHours}</td>
+        //<td>${netSalary.toFixed(2)}</td>
         tbody.appendChild(tr);
     });
 

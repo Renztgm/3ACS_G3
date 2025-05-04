@@ -27,10 +27,11 @@ body, html {
 /* Sidebar */
 .sidebar {
     width: 20%;
-    background-color: #f8f9fa;
+    background-color: #1D2024;
     padding: 1rem;
     min-height: 100vh;
     box-sizing: border-box;
+    color: white;
 }
 
     .sidebar h5 {
@@ -50,14 +51,14 @@ body, html {
     .sidebar .nav-link {
         display: block;
         text-decoration: none;
-        color: #333;
+        color: white;
         padding: 0.5rem;
         border-radius: 4px;
         transition: background-color 0.3s ease;
     }
 
         .sidebar .nav-link:hover {
-            background-color: #e2e6ea;
+            background-color: #2c3038;
         }
 
     /* Button styles */
@@ -73,20 +74,20 @@ body, html {
     }
 
 .btn-outline-danger {
-    background-color: transparent;
+    background-color: #dc3545;
     border: 2px solid #dc3545;
-    color: #dc3545;
+    color: white;
 }
 
     .btn-outline-danger:hover {
-        background-color: #dc3545;
+        background-color: #e24b60;
         color: white;
     }
 
 .btn-outline-primary {
-    background-color: transparent;
+    background-color: #007bff;
     border: 1px solid #007bff;
-    color: #007bff;
+    color: white;
 }
 
     .btn-outline-primary:hover {

@@ -1,0 +1,77 @@
+﻿@page
+@model Payroll_Test_2.Pages.TaxSettingsModel
+@{
+    ViewData["Title"] = "Tax Settings";
+}
+
+<h1>Tax Settings</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Deduction Settings</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" asp-for="DeductionSettings.DeductionID" />
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Deduction Type</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SSS</td>
+                                    <td>
+                                        <input type="number" step="0.001" class="form-control" asp-for="DeductionSettings.SSS" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PHILHEALTH</td>
+                                    <td>
+                                        <input type="number" step="0.001" class="form-control" asp-for="DeductionSettings.Philhealth" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PAGIBIG</td>
+                                    <td>
+                                        <input type="number" step="0.001" class="form-control" asp-for="DeductionSettings.Pagibig" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>HMO</td>
+                                    <td>
+                                        <input type="number" step="0.01" class="form-control" asp-for="DeductionSettings.HMO" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

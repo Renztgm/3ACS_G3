@@ -7,6 +7,7 @@ using Payroll_Test_2.Pages.Data;
 using Payroll_Test_2.Pages.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using static TestPayrollModel;
 
 [Authorize]
 [IgnoreAntiforgeryToken]
@@ -45,6 +46,25 @@ public class TestPayrollModel : PageModel
             };
         Debug.WriteLine($"Received: startDate={request?.startDate}, endDate={request?.endDate}, cycle={request?.cycle}");
 
+        var allDeductions = await _context.Deductions
+            .ToListAsync();
+
+        decimal totalSSS = 0;
+        decimal totalPagibig = 0;
+        decimal totalPhilhealth = 0;
+        decimal totalHMO = 0;
+
+        
+        // Process the deductions
+        foreach (var deduction in allDeductions)
+        {
+            totalSSS += deduction.SSS;
+            totalPagibig += deduction.Pagibig;
+            totalPhilhealth += deduction.Philhealth;
+            totalHMO += deduction.HMO;
+
+            // Do something with each deduction (e.g., processing, calculating, etc.)
+        }
         var dateFormat = "yyyy-MM-dd";
         if (!DateTime.TryParseExact(request.startDate, dateFormat, null, System.Globalization.DateTimeStyles.None, out var startDate) ||
             !DateTime.TryParseExact(request.endDate, dateFormat, null, System.Globalization.DateTimeStyles.None, out var endDate))
@@ -111,9 +131,7 @@ public class TestPayrollModel : PageModel
             grossSalary = grossSalary / 4m;
         else if (request.cycle == "Bi-Weekly")
             grossSalary = grossSalary / 2m;
-        else if (request.cycle == "Monthly")
-            grossSalary = grossSalary; // No change
-        else if (request.cycle == "Project-Based")
+        else if (request.cycle == "Monthly" || request.cycle == "Project-Based")
             grossSalary = grossSalary; // No change
 
 
@@ -130,17 +148,14 @@ public class TestPayrollModel : PageModel
         else if (request.cycle == "Monthly" || request.cycle == "Project-Based")
             divider = 1m;
 
-
-
-
-
         // Define your deduction percentages
-        decimal sssRate = 0.05m;       // 5%
-        decimal pagibigRate = 0.02m;   // 2%
-        decimal philhealthRate = 0.025m; // 2.5%
+        decimal hmoFixedAmount = totalHMO;  // Fixed amount, not percentage
+        decimal sssRate = totalSSS;       // 5%
+        decimal pagibigRate = totalPagibig;   // 2%
+        decimal philhealthRate = totalPhilhealth; // 2.5%
         decimal tinRate = 0.10m;       // 10%
-        decimal hmoFixedAmount = 1100m;  // Fixed amount, not percentage
 
+        Debug.WriteLine($"SSS {sssRate} Pagibig {pagibigRate} Philhealth {philhealthRate} HMO {hmoFixedAmount}");
         // Deductions
         var sssDeduction = (monthlySalary * sssRate) / divider;
         var pagibigDeduction = (monthlySalary * pagibigRate) / divider;
@@ -209,7 +224,7 @@ public class TestPayrollModel : PageModel
             FullName = g.Key.FirstName + " " + g.Key.LastName,
             TotalWorkedHours = totalWorkedHours,
             ScheduledWorkHours = scheduledWorkHours,
-            OvertimeHours = overtimeHours,
+            OvertimeHours = overtimePay,
             Leaves = _context.Attendance
                 .Count(a => a.EmployeeID == g.Key.EmployeeID && a.Date >= startDate && a.Date <= endDate && leaveStatuses.Contains(a.Status)),
             Bonus = totalBonus,

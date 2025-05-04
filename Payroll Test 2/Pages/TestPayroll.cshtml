@@ -6,6 +6,10 @@
 }
 
 
+<div id="fetch-loading">
+    <div class="spinner"></div>
+</div>
+
 
 <div class="container mt-4">
     <h2>Payroll Processing</h2>
@@ -82,13 +86,13 @@
 
         <!-- Step 3 -->
         <div id="step3" class="tab-pane">
-            <h3>Step 3: Overtime Summary</h3>
+            <h3>Step 3:Deduction Summary</h3>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Employee Name</th>
-                        <th>Total Worked Hours</th>
-                        <th>Overtime Hours</th>
+                        @* <th>Total Worked Hours</th> *@
+                        @* <th>Overtime Hours</th> *@
                         <th>SSS Deduction</th>
                         <th>Pagibig Deduction</th>
                         <th>Philhealth Deduction</th>
@@ -96,7 +100,7 @@
                         <th>HMO Deduction</th>
                         <th>Loan Deduction</th>
                         <th>Total Deductions</th>
-                        <th>Net Salary</th>
+                        @* <th>Net Salary</th> *@
                     </tr>
                 </thead>
                 <tbody id="overtimeSummaryBody"></tbody>
