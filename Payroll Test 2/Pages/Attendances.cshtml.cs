@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Payroll_Test_2.Pages.Data;
-using Microsoft.AspNetCore.Authorization; // Add this
+using Microsoft.AspNetCore.Authorization;
+using Payroll_Test_2.Data; // Add this
 
 namespace Payroll_Test_2.Pages
 {

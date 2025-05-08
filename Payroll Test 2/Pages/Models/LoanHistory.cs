@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Payroll_Test_2.Pages.Models
@@ -14,5 +16,9 @@ namespace Payroll_Test_2.Pages.Models
         public decimal LoanAmount { get; set; }
         [Column("DateIssued")]
         public DateTime DateIssued { get; set; }
+
+        [BindProperty]
+        [ValidateNever]
+        public Loans? Loan { get; set; }  // This is the navigation property
     }
 }

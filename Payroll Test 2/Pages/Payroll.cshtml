@@ -11,8 +11,29 @@
 
 
     <div class="payroll-actions">
-        <a asp-page-handler="DownloadCsv" class="btn btn-primary">Export Payroll CSV</a>
+        <a asp-page-handler="DownloadCsv"
+           asp-route-month="@Request.Query["month"]"
+           asp-route-cycle="@Request.Query["cycle"]"
+           class="btn btn-primary">Export Payroll CSV</a>
     </div>
+
+    <form method="get" class="filter-form">
+        <div>
+            <label for="month">Month:</label>
+            <input type="month" id="month" name="month" value="@Request.Query["month"]" />
+        </div>
+        <div>
+            <label for="cycle">Cycle:</label>
+            <select id="cycle" name="cycle">
+                <option value="">All</option>
+                <option value="Weekly" selected="@(Request.Query["cycle"] == "Weekly")">Weekly</option>
+                <option value="Bi-Weekly" selected="@(Request.Query["cycle"] == "Bi-Weekly")">Bi-Weekly</option>
+                <option value="Monthly" selected="@(Request.Query["cycle"] == "Monthly")">Monthly</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Filter</button>
+    </form>
+
 
     <h3>Employee Payroll List</h3>
     <table class="payroll-table minimal-table styled-table">
@@ -25,9 +46,9 @@
                 <th>Payroll End Date</th>
                 <th>Actions</th>
             </tr>
-        </thead>
+        </thead>    
         <tbody>
-            @foreach (var payroll in Model.PayrollList)
+            @foreach (var payroll in Model.PayrollList) 
             {
                 <tr>
                     <td>@payroll.Employee.EmployeeId</td>
@@ -36,10 +57,19 @@
                     <td>@payroll.PayrollStartDate</td>
                     <td>@payroll.PayrollEndDate</td>
                     <td>
-                        <a href="/Payroll/EditPayroll?id=@payroll.PayrollID" class="btn btn-primary">✏️</a>
-                        @* <button class="btn btn-download">Download Payslip</button> *@
-                        <a asp-page="/Payslip" asp-route-payrollId="@payroll.PayrollID" asp-route-employeeId="@payroll.EmployeeID">View Payslip</a>
+                        <a href="/EditPayroll?id=@payroll.PayrollID" class="btn btn-primary">✏️</a>
+                        <a class="btn btn-primary" asp-page="./Payslip" asp-page-handler="Csv" asp-route-payrollId="@payroll.PayrollID" asp-route-employeeId="@payroll.EmployeeID">
+                            Download CSV
+                        </a>
 
+                        <a asp-page="/Payslip" asp-route-payrollId="@payroll.PayrollID" asp-route-employeeId="@payroll.EmployeeID">View Payslip</a>
+                        <form method="post" style="display: inline;">
+                            <input type="hidden" name="payrollId" value="@payroll.PayrollID" />
+                            <button type="submit" asp-page-handler="Delete" class="btndelete"
+                                    onclick="return confirm('Are you sure you want to delete this payroll record?');">
+                                🗑️
+                            </button>
+                        </form>
                     </td>
                 </tr>
             }

@@ -1,8 +1,13 @@
 ﻿/* Table styling */
+
+.admin-payroll-container {
+    overflow: auto;
+}
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 2rem;
+    overflow: scroll;
 }
 
 thead {
@@ -20,3 +25,34 @@ th, td {
         /*    background-color: #f1f1f1;*/
         cursor: pointer;
     }
+
+.payroll-actions {
+    justify-content: flex-start;
+    text-align: center;
+    background-color: #1D2024;
+    border-radius: 20px;
+    border: 2px solid #1D2024;
+    padding: 5px;
+    color: white;
+    width: 200px;
+    text-decoration: none;
+}
+    .payroll-actions a {
+        text-decoration: none;
+        color: white;
+    }
+    .payroll-actions:hover {
+        background-color: #1D2024;
+        border: 2px solid #dc3545;
+        color: white;
+    }
+
+a{
+    text-decoration: none;
+}
+
+.btndelete {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}

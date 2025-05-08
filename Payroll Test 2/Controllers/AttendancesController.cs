@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Payroll_Test_2.Pages.Data;
+using Payroll_Test_2.Data;
 
 namespace Payroll_Test_2.Controllers
 

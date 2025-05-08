@@ -98,6 +98,8 @@ function fetchWorkedHours() {
                         <td>${row.fullName}</td>
                         <td>${Number(row.totalWorkedHours).toFixed(2)} Hrs/${Number(row.scheduledWorkHours).toFixed(2)} Hrs</td>
                         <td>${Number(row.overtimeHours).toFixed(2)}</td>
+                        <td>${parseFloat(row.nightDifferentialPay || 0).toFixed(2)}</td>
+                        <td  style="display:none;">${parseFloat(row.nightDifferentialHours || 0).toFixed(2)}</td>
                         <td>${Number(row.leaves).toFixed(2)}</td>
                         <td>${Number(row.bonus).toFixed(2)}</td>
                         <td>${Number(row.grossSalary).toFixed(2)}</td>
@@ -110,10 +112,14 @@ function fetchWorkedHours() {
                         <td style="display:none;">${Number(row.totalDeductions).toFixed(2)}</td>
                         <td style="display:none;">${Number(row.netSalary).toFixed(2)}</td>
                     `;
+                        console.log("Night Differential Pay:", row.NightDifferentialPay);
+                        console.log("Night Differential Hours:", row.NightDifferentialHours);
                         tbody.appendChild(tr);
                     });
                     document.getElementById("workedHoursData").style.display = "block";
                     document.getElementById("noDataMessage").style.display = "none";
+
+
                     showStep2();
                     //renderStep3EmployeeTable(data); // <-- Step 3
                     generateStep4Summary(data);      // <-- Step 4 this will call the method step 4
@@ -190,15 +196,17 @@ function showStep3() {
         const employeeName = cells[1].textContent;
         const totalWorkedHours = cells[2].textContent;
         const overtimeHours = cells[3].textContent;
+        const nightDifferentialPay = cells[4].textContent;
+        const nightnightDifferential = cells[5].textContent;
 
-        const sssDeduction = Number(cells[7].textContent);
-        const pagibigDeduction = Number(cells[8].textContent);
-        const philhealthDeduction = Number(cells[9].textContent);
-        const tinDeduction = Number(cells[10].textContent);
-        const hmoDeduction = Number(cells[11].textContent);
-        const loanDeduction = Number(cells[12].textContent);
-        const totalDeductions = Number(cells[13].textContent);
-        const netSalary = Number(cells[14].textContent);
+        const sssDeduction = Number(cells[9].textContent);
+        const pagibigDeduction = Number(cells[10].textContent);
+        const philhealthDeduction = Number(cells[11].textContent);
+        const tinDeduction = Number(cells[12].textContent);
+        const hmoDeduction = Number(cells[13].textContent);
+        const loanDeduction = Number(cells[14].textContent);
+        const totalDeductions = Number(cells[15].textContent);
+        const netSalary = Number(cells[16].textContent);
 
         // Fetch loan deduction from the payrollRecords array (which contains all records)
         const employeeID = cells[0].textContent; // Assuming employee ID is in the first cell
@@ -216,9 +224,6 @@ function showStep3() {
             <td>${totalDeductions.toFixed(2)}</td>
             
         `;
-        //<td>${totalWorkedHours}</td>
-        //<td>${overtimeHours}</td>
-        //<td>${netSalary.toFixed(2)}</td>
         tbody.appendChild(tr);
     });
 
@@ -314,7 +319,9 @@ async function savePayroll() {
         PayrollStartDate: document.getElementById("startDate").value,
         PayrollEndDate: document.getElementById("endDate").value,
         TotalWorkedHours: record.totalWorkedHours,
-        OvertimeHours: record.overtimeHours,    
+        OvertimeHours: record.overtimeHours,
+        NightDifferentialHours: record.nightDifferentialHours,
+        NightDifferentialPay: record.nightDifferentialPay,
         Leaves: record.leaves,
         Bonus: record.bonus,
         GrossSalary: record.grossSalary,

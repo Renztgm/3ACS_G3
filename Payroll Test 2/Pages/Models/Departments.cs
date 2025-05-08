@@ -12,30 +12,28 @@ namespace Payroll_Test_2.Pages.Models
         [Column("DepartmentID")]
         public int DepartmentId { get; set; }
 
-        [Required]
         [Column("DepartmentName")]
         [StringLength(100)]
-        public string DepartmentName { get; set; }
-
-        [Required]
+        public string DepartmentName { get; set; } = string.Empty;
         [Column("ManagerID")]
-        public int ManagerId { get; set; }
+        public int? ManagerId { get; set; } // ✅ Already correct
 
         [Column("Description")]
-        public string Description { get; set; }
+        public string? Description { get; set; } // ✅ Make nullable if DB allows NULL
 
         [Column("Performance")]
-        public decimal Performance { get; set; }
+        public decimal? Performance { get; set; } // ✅ Make nullable if NULLs exist
 
         [Column("DateCreated")]
-        public DateTime DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; } // ✅ Make nullable if NULLs exist
 
         [Column("Budget")]
-        public decimal Budget { get; set; }
+        public decimal? Budget { get; set; } // ✅ Make nullable if NULLs exist
 
         [Column("Status")]
-        public string Status { get; set; }
-        // Navigation Property - One Department can have many Employees
-        public ICollection<Employee> Employees { get; set; }
+        public string? Status { get; set; } // ✅ Make nullable if DB allows NULL
+
+        public ICollection<Employee>? Employees { get; set; } // Nullable navigation if needed
     }
+
 }

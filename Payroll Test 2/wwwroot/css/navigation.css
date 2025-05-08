@@ -98,6 +98,7 @@ body, html {
 /* Main content */
 .main-content {
     width: 80%;
+    height: 100vh;
     padding: 2rem;
     box-sizing: border-box;
     overflow: auto;

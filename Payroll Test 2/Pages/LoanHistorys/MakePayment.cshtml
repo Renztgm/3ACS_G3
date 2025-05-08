@@ -1,0 +1,49 @@
+﻿@page
+@model Payroll_Test_2.Pages.LoanHistorys.MakePaymentModel
+@{
+    ViewData["Title"] = "Make a Payment";
+}
+
+<h2>Make a Payment</h2>
+
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["StatusMessage"]
+    </div>
+}
+
+@if (Model.Loan != null)
+{
+    <p><strong>Loan Type:</strong> @Model.Loan.LoanType</p>
+    <p><strong>Loan Amount:</strong> @Model.Loan.LoanAmount</p>
+    <p><strong>Paid Amount:</strong> @Model.Loan.PaidLoan</p>
+    <p><strong>Balance:</strong> @(Model.Loan.LoanAmount - Model.Loan.PaidLoan)</p>
+}
+
+<form method="post">
+    <input type="text" asp-for="NewPayment.LoanID"/>
+
+    <div class="form-group">
+        <label asp-for="NewPayment.LoanAmount">Payment Amount</label>
+        <input asp-for="NewPayment.LoanAmount" class="form-control" />
+        <span asp-validation-for="NewPayment.LoanAmount" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Payment</button>
+</form>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

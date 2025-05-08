@@ -27,7 +27,12 @@
             [Column("OvertimeHours")]
             public decimal? OvertimeHours { get; set; } // Overtime hours worked
 
-            [Column("Incentive")]
+            // Add these new properties
+
+            public decimal? NightDifferentialHours { get; set; }
+            public decimal? NightDifferentialPay { get; set; }
+
+        [Column("Incentive")]
             public decimal? Incentive { get; set; } // Any additional incentives
 
             [Column("Bonus")]

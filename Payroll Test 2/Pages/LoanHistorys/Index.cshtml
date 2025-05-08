@@ -1,0 +1,34 @@
+﻿@page
+@model Payroll_Test_2.Pages.LoanHistorys.IndexModel
+@{
+    ViewData["Title"] = "Loan Payment History";
+}
+
+<h2>Loan History</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Loan ID</th>
+            <th>Amount</th>
+            <th>Date Paid</th>
+            <th>Loan Type</th>
+            <th>Action</th> <!-- Column for action buttons -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LoanHistory)
+        {
+            <tr>
+                <td>@item.LoanID</td>
+                <td>@item.LoanAmount</td>
+                <td>@item.DateIssued.ToShortDateString()</td>
+                <td>@item.Loan.LoanType</td>
+                <td>
+                    <!-- Link to the MakePayment page with the LoanID as a parameter -->
+                    <a href="/LoanHistorys/MakePayment?id=@item.LoanID" class="btn btn-primary">Make Payment</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

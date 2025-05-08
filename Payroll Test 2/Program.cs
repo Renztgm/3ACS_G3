@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Pages.Data;
+using Payroll_Test_2.Data;
+using Payroll_Test_2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 // Add database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -61,6 +63,12 @@ app.UseSession();         // ✅ Enable session
 app.UseAuthentication();  // ✅ Ensure authentication is used
 app.UseAuthorization();   // ✅ Ensure authorization is enforced
 
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers(); // THIS is required for API controllers
+    endpoints.MapRazorPages();  // For Razor pages
+});
 
 // Configure error handling
 if (!app.Environment.IsDevelopment())

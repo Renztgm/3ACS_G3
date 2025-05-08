@@ -1,0 +1,84 @@
+﻿@page
+@model Payroll_Test_2.Pages.LoansLoc.CreateModel
+@{
+    ViewData["Title"] = "Create Loan";
+}
+
+<h1>Create New Loan</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.EmployeeID" class="control-label"></label>
+                <input asp-for="Loan.EmployeeID" class="form-control" />
+                <span asp-validation-for="Loan.EmployeeID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.LoanType" class="control-label"></label>
+                <select asp-for="Loan.LoanType" class="form-control">
+                    <option value="">-- Select Loan Type --</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Emergency">Emergency</option>
+                    <option value="Education">Education</option>
+                    <option value="Medical">Medical</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span asp-validation-for="Loan.LoanType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.LoanAmount" class="control-label"></label>
+                <input asp-for="Loan.LoanAmount" class="form-control" />
+                <span asp-validation-for="Loan.LoanAmount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.LoanStatus" class="control-label"></label>
+                <select asp-for="Loan.LoanStatus" class="form-control">
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Defaulted">Defaulted</option>
+                </select>
+                <span asp-validation-for="Loan.LoanStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.DateIssued" class="control-label"></label>
+                <input asp-for="Loan.DateIssued" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Loan.DateIssued" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.DueDate" class="control-label"></label>
+                <input asp-for="Loan.DueDate" class="form-control" type="date" />
+                <span asp-validation-for="Loan.DueDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Loan.PaidLoan" class="control-label"></label>
+                <input asp-for="Loan.PaidLoan" class="form-control" value="0" />
+                <span asp-validation-for="Loan.PaidLoan" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Payroll_Test_2.Pages.Data;
+using Payroll_Test_2.Data;
 using Payroll_Test_2.Pages.Models;  // Update this if needed to match your actual namespace
 using System.Threading.Tasks;
 

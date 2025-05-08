@@ -1,0 +1,65 @@
+﻿@page "{id:int}"
+@model Payroll_Test_2.Pages.LoansLoc.DetailsModel
+@{
+    ViewData["Title"] = "Loan Details";
+}
+
+<h1>Loan Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.EmployeeID)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.EmployeeID)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.LoanType)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.LoanType)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.LoanAmount)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.LoanAmount)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.LoanStatus)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.LoanStatus)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.DateIssued)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.DateIssued)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.DueDate)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.DueDate)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Loan.PaidLoan)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Loan.PaidLoan)
+        </dd>
+        <dt class="col-sm-3">
+            Balance
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.Loan.LoanAmount - Model.Loan.PaidLoan)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Loan.LoanID" class="btn btn-primary">Edit</a>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>

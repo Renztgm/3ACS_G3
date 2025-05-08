@@ -1,0 +1,217 @@
+﻿@page
+@model Payroll_Test_2.Pages.Payroll.EditPayrollModel
+@{
+    ViewData["Title"] = "Edit Payroll";
+}
+
+<head>
+</head>
+
+<div class="admin-payroll-container">
+    <h2>Edit Payroll Record</h2>
+
+    <form method="post" class="payroll-edit-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Payroll.PayrollID" />
+
+        <div class="form-section">
+            <h3>Employee Information</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Employee Name</label>
+                    <input type="text" value="@Model.EmployeeFullName" class="form-control" readonly />
+                    <input type="hidden" asp-for="Payroll.EmployeeID" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Payroll Period</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Payroll.PayrollCycle">Payroll Cycle</label>
+                    <select asp-for="Payroll.PayrollCycle" class="form-control">
+                        <option value="Weekly">Weekly</option>
+                        <option value="Bi-Weekly">Bi-Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.PayrollStartDate">Start Date</label>
+                    <input asp-for="Payroll.PayrollStartDate" class="form-control" type="date" />
+                    <span asp-validation-for="Payroll.PayrollStartDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.PayrollEndDate">End Date</label>
+                    <input asp-for="Payroll.PayrollEndDate" class="form-control" type="date" />
+                    <span asp-validation-for="Payroll.PayrollEndDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Work Information</h3>
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.TotalWorkedHours">Total Hours</label>
+                    <input asp-for="Payroll.TotalWorkedHours" class="form-control calculation-input" />
+                    <span asp-validation-for="Payroll.TotalWorkedHours" class="text-danger"></span>
+                </div>
+
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.OvertimeHours">Overtime Hours</label>
+                    <input asp-for="Payroll.OvertimeHours" class="form-control calculation-input" />
+                    <span asp-validation-for="Payroll.OvertimeHours" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Compensation</h3>
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.GrossSalary">Gross Salary</label>
+                    <input asp-for="Payroll.GrossSalary" class="form-control calculation-input" />
+                    <span asp-validation-for="Payroll.GrossSalary" class="text-danger"></span>
+                </div>
+
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.NetSalary">Net Salary</label>
+                    <input asp-for="Payroll.NetSalary" class="form-control" readonly />
+                    <span asp-validation-for="Payroll.NetSalary" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.Incentive">Incentive</label>
+                    <input asp-for="Payroll.Incentive" class="form-control calculation-input" />
+                    <span asp-validation-for="Payroll.Incentive" class="text-danger"></span>
+                </div>
+
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.Bonus">Bonus</label>
+                    <input asp-for="Payroll.Bonus" class="form-control calculation-input" />
+                    <span asp-validation-for="Payroll.Bonus" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Deductions</h3>
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.TotalDeductions">Total Deductions</label>
+                    <input asp-for="Payroll.TotalDeductions" class="form-control" readonly />
+                    <span asp-validation-for="Payroll.TotalDeductions" class="text-danger"></span>
+                </div>
+
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.Leave">Leave</label>
+                    <input asp-for="Payroll.Leave" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.Leave" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group quarter-width">
+                    <label asp-for="Payroll.SSS">SSS</label>
+                    <input asp-for="Payroll.SSS" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.SSS" class="text-danger"></span>
+                </div>
+
+                <div class="form-group quarter-width">
+                    <label asp-for="Payroll.Pagibig">Pagibig</label>
+                    <input asp-for="Payroll.Pagibig" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.Pagibig" class="text-danger"></span>
+                </div>
+
+                <div class="form-group quarter-width">
+                    <label asp-for="Payroll.Philhealth">Philhealth</label>
+                    <input asp-for="Payroll.Philhealth" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.Philhealth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group quarter-width">
+                    <label asp-for="Payroll.TIN">TIN</label>
+                    <input asp-for="Payroll.TIN" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.TIN" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.HMO">HMO</label>
+                    <input asp-for="Payroll.HMO" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.HMO" class="text-danger"></span>
+                </div>
+
+                <div class="form-group half-width">
+                    <label asp-for="Payroll.LoanDeduction">Loan Deduction</label>
+                    <input asp-for="Payroll.LoanDeduction" class="form-control deduction-input" />
+                    <span asp-validation-for="Payroll.LoanDeduction" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="Payroll.AttendanceID" />
+        <input type="hidden" asp-for="Payroll.CreatedAt" />
+        <input type="hidden" asp-for="Payroll.UpdatedAt" value="@DateTime.Now" />
+        <input type="hidden" asp-for="Payroll.LeaveID" />
+        <input type="hidden" asp-for="Payroll.LoanID" />
+        <input type="hidden" asp-for="Payroll.DeductionID" />
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="/Payroll" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+            // Auto-calculate fields when inputs change
+            $('.deduction-input').on('change', calculateTotalDeductions);
+            $('.calculation-input').on('change', calculateNetSalary);
+
+            // Initial calculations
+            calculateTotalDeductions();
+            calculateNetSalary();
+
+            function calculateTotalDeductions() {
+                var sss = parseFloat($('#Payroll_SSS').val()) || 0;
+                var pagibig = parseFloat($('#Payroll_Pagibig').val()) || 0;
+                var philhealth = parseFloat($('#Payroll_Philhealth').val()) || 0;
+                var tin = parseFloat($('#Payroll_TIN').val()) || 0;
+                var hmo = parseFloat($('#Payroll_HMO').val()) || 0;
+                var loanDeduction = parseFloat($('#Payroll_LoanDeduction').val()) || 0;
+                var leave = parseFloat($('#Payroll_Leave').val()) || 0;
+
+                var totalDeductions = sss + pagibig + philhealth + tin + hmo + loanDeduction + leave;
+                $('#Payroll_TotalDeductions').val(totalDeductions.toFixed(2));
+
+                // After updating deductions, recalculate net salary
+                calculateNetSalary();
+            }
+
+            function calculateNetSalary() {
+                var grossSalary = parseFloat($('#Payroll_GrossSalary').val()) || 0;
+                var totalDeductions = parseFloat($('#Payroll_TotalDeductions').val()) || 0;
+                var incentive = parseFloat($('#Payroll_Incentive').val()) || 0;
+                var bonus = parseFloat($('#Payroll_Bonus').val()) || 0;
+
+                var netSalary = grossSalary - totalDeductions + incentive + bonus;
+                $('#Payroll_NetSalary').val(netSalary.toFixed(2));
+            }
+        });
+    </script>
+}

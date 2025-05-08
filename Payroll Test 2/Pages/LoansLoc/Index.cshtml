@@ -1,0 +1,80 @@
+﻿@page
+@model Payroll_Test_2.Pages.LoansLoc.IndexModel
+@{
+    ViewData["Title"] = "Loans";
+}
+
+<h1>Loans Management</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New Loan</a>
+    <a href="/LoanHistorys/Index"> LoanHistory</a> 
+</p>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].EmployeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].LoanType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].LoanAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].LoanStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].DateIssued)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Loans[0].PaidLoan)
+            </th>
+            <th>
+                Balance
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Loans)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoanStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateIssued)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaidLoan)
+                </td>
+                <td>
+                    @(item.LoanAmount - item.PaidLoan)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.LoanID" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.LoanID" class="btn btn-sm btn-info">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.LoanID" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="/LoanHistorys/MakePayment?id=@item.LoanID" class="btn btn-primary">Make Payment</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
