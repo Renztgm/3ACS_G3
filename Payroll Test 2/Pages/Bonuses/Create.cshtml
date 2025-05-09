@@ -1,0 +1,41 @@
+﻿@page
+@model Payroll_Test_2.Pages.Bonuses.CreateModel
+@{
+    ViewData["Title"] = "Create Bonus";
+}
+
+<h1>Create Bonus</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="EmployeeID">Employee</label>
+        <select asp-for="BonusCreate.EmployeeID" class="form-control" asp-items="Model.EmployeeOptions">
+            <option value="">Select Employee</option>
+        </select>
+        <span asp-validation-for="BonusCreate.EmployeeID" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Amount">Amount</label>
+        <input asp-for="BonusCreate.Amount" class="form-control" />
+        <span asp-validation-for="BonusCreate.Amount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input asp-for="BonusCreate.Description" class="form-control" />
+        <span asp-validation-for="BonusCreate.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Date">Date</label>
+        <input asp-for="BonusCreate.Date" class="form-control" type="date" />
+        <span asp-validation-for="BonusCreate.Date" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Bonus</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

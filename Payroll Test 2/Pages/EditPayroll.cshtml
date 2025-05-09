@@ -19,7 +19,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Employee Name</label>
-                    <input type="text" value="@Model.EmployeeFullName" class="form-control" readonly />
+                    <input type="text" value="@Model.EmployeeFullName" class="form-control" readonly disabled/>
                     <input type="hidden" asp-for="Payroll.EmployeeID" />
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label asp-for="Payroll.PayrollCycle">Payroll Cycle</label>
-                    <select asp-for="Payroll.PayrollCycle" class="form-control">
+                    <select asp-for="Payroll.PayrollCycle" class="form-control" disabled>
                         <option value="Weekly">Weekly</option>
                         <option value="Bi-Weekly">Bi-Weekly</option>
                         <option value="Monthly">Monthly</option>
@@ -41,13 +41,13 @@
             <div class="form-row">
                 <div class="form-group half-width">
                     <label asp-for="Payroll.PayrollStartDate">Start Date</label>
-                    <input asp-for="Payroll.PayrollStartDate" class="form-control" type="date" />
+                    <input asp-for="Payroll.PayrollStartDate" class="form-control" type="date" disabled/>
                     <span asp-validation-for="Payroll.PayrollStartDate" class="text-danger"></span>
                 </div>
 
                 <div class="form-group half-width">
                     <label asp-for="Payroll.PayrollEndDate">End Date</label>
-                    <input asp-for="Payroll.PayrollEndDate" class="form-control" type="date" />
+                    <input asp-for="Payroll.PayrollEndDate" class="form-control" type="date" disabled/>
                     <span asp-validation-for="Payroll.PayrollEndDate" class="text-danger"></span>
                 </div>
             </div>
@@ -58,13 +58,13 @@
             <div class="form-row">
                 <div class="form-group half-width">
                     <label asp-for="Payroll.TotalWorkedHours">Total Hours</label>
-                    <input asp-for="Payroll.TotalWorkedHours" class="form-control calculation-input" />
+                    <input asp-for="Payroll.TotalWorkedHours" class="form-control calculation-input" disabled />
                     <span asp-validation-for="Payroll.TotalWorkedHours" class="text-danger"></span>
                 </div>
 
                 <div class="form-group half-width">
                     <label asp-for="Payroll.OvertimeHours">Overtime Hours</label>
-                    <input asp-for="Payroll.OvertimeHours" class="form-control calculation-input" />
+                    <input asp-for="Payroll.OvertimeHours" class="form-control calculation-input" disabled/>
                     <span asp-validation-for="Payroll.OvertimeHours" class="text-danger"></span>
                 </div>
             </div>
@@ -75,23 +75,23 @@
             <div class="form-row">
                 <div class="form-group half-width">
                     <label asp-for="Payroll.GrossSalary">Gross Salary</label>
-                    <input asp-for="Payroll.GrossSalary" class="form-control calculation-input" />
+                    <input asp-for="Payroll.GrossSalary" class="form-control calculation-input" disabled/>
                     <span asp-validation-for="Payroll.GrossSalary" class="text-danger"></span>
                 </div>
 
                 <div class="form-group half-width">
                     <label asp-for="Payroll.NetSalary">Net Salary</label>
-                    <input asp-for="Payroll.NetSalary" class="form-control" readonly />
+                    <input asp-for="Payroll.NetSalary" class="form-control" readonly disabled/>
                     <span asp-validation-for="Payroll.NetSalary" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group half-width">
-                    <label asp-for="Payroll.Incentive">Incentive</label>
-                    <input asp-for="Payroll.Incentive" class="form-control calculation-input" />
-                    <span asp-validation-for="Payroll.Incentive" class="text-danger"></span>
-                </div>
+                @* <div class="form-group half-width"> *@
+                @*     <label asp-for="Payroll.Incentive">Incentive</label> *@
+                @*     <input asp-for="Payroll.Incentive" class="form-control calculation-input" hidden /> *@
+                @*     <span asp-validation-for="Payroll.Incentive" class="text-danger"></span> *@
+                @* </div> *@
 
                 <div class="form-group half-width">
                     <label asp-for="Payroll.Bonus">Bonus</label>

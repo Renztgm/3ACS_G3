@@ -338,7 +338,7 @@ using static TestPayrollModel;
                 .Where(l => l.EmployeeID == g.Key.EmployeeID && l.LoanStatus == "Approved")
                 .ToList();
 
-            decimal loanDeduction = loans.Sum(l => (l.LoanAmount - l.PaidLoan) / 12m);
+            decimal loanDeduction = loans.Sum(l => (l.LoanAmount) / 12m);
 
             Debug.WriteLine($"Loan Amount {loanDeduction}");
 

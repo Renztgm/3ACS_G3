@@ -1,0 +1,68 @@
+﻿@page
+@model Payroll_Test_2.Pages.BonusIndexPageModel
+@{
+    ViewData["Title"] = "Bonuses";
+}
+
+<h1>Bonuses</h1>
+
+<p>
+    <a asp-page="/Bonuses/Create" class="btn btn-primary">Create New</a>
+</p>
+
+@if (Model.Bonuses != null && Model.Bonuses.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Bonuses[0].Employee)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Bonuses[0].Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Bonuses[0].Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Bonuses[0].Description)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Bonuses)
+                {
+                    <tr>
+                        <td>
+                            @($"{item.Employee.FirstName} {item.Employee.LastName}")
+                        </td>
+                        <td>
+                            @item.Amount.ToString("C")
+                        </td>
+                        <td>
+                            @item.Date.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Details</a>
+                                <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <p>No bonuses have been added yet.</p>
+    </div>
+}
