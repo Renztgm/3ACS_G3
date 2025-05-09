@@ -26,6 +26,8 @@ namespace Payroll_Test_2.Pages.Models
 
         [Column("PaidLoan")] //How much did paid it can be 0 
         public decimal PaidLoan { get; set; }
+        [Column("LoanTerm")]
+        public decimal LoanTerm { get; set; }
 
 
     }

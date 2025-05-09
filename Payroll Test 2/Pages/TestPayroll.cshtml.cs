@@ -338,9 +338,35 @@ using static TestPayrollModel;
                 .Where(l => l.EmployeeID == g.Key.EmployeeID && l.LoanStatus == "Approved")
                 .ToList();
 
-            decimal loanDeduction = loans.Sum(l => (l.LoanAmount) / 12m);
+            decimal loanDeductionwithoutdiveder = loans.Sum(l => {
+                // Calculate total payment with 3% interest
+                decimal totalInterest = l.LoanAmount * 0.03m; // 3% of the total loan amount
+                decimal totalPayment = l.LoanAmount + totalInterest;
 
-            Debug.WriteLine($"Loan Amount {loanDeduction}");
+                // Calculate remaining principal
+                decimal remainingPrincipal = l.LoanAmount - l.PaidLoan;
+
+                // If loan is fully paid, no more deductions
+                if (remainingPrincipal <= 0)
+                    return 0m;
+
+                // Calculate remaining payments
+                decimal remainingPayments = l.LoanTerm - (l.PaidLoan / (totalPayment / l.LoanTerm));
+
+                // Handle case where remaining payments might be zero or negative
+                if (remainingPayments <= 0)
+                    return remainingPrincipal;
+
+                // Calculate monthly payment
+                decimal monthlyPayment = totalPayment / l.LoanTerm;
+
+                Debug.WriteLine($"Loan ID: {l.LoanID}, Total: {totalPayment}, Monthly: {monthlyPayment}, Remaining: {remainingPrincipal}");
+
+                return monthlyPayment;
+            });
+
+            decimal loanDeduction = loanDeductionwithoutdiveder / divider;
+            Debug.WriteLine($"Loan Amount {loanDeduction} =  {loanDeductionwithoutdiveder}/ {divider}");
 
 
 
@@ -350,6 +376,7 @@ using static TestPayrollModel;
             // Net Salary after deductions
             var adjustedGrossSalary = grossSalary * (totalWorkedHours / scheduledWorkHours > 1 ? 1 : totalWorkedHours / scheduledWorkHours);
 
+            
 
             // Calculate night differential pay
             var hourlyRate = scheduledWorkHours > 0 ? grossSalary / scheduledWorkHours : 0;
@@ -365,7 +392,7 @@ using static TestPayrollModel;
             var netSalary = totalBonus > 0
                 ? totalBonus + (adjustedGrossSalary - totalDeductions) + overtimePay + nightDifferentialPay
                 : adjustedGrossSalary - totalDeductions + overtimePay + nightDifferentialPayRound;
-
+            var adjSalary = adjustedGrossSalary + overtimePay + nightDifferentialPay + totalBonus;
 
             return new
             {
@@ -379,7 +406,7 @@ using static TestPayrollModel;
                 Leaves = _context.Attendance
                     .Count(a => a.EmployeeID == g.Key.EmployeeID && a.Date >= startDate && a.Date <= endDate && leaveStatuses.Contains(a.Status)),
                 Bonus = totalBonus,
-                GrossSalary = grossSalary,
+                GrossSalary = adjSalary,
                 SSS = sssDeduction,
                 Pagibig = pagibigDeduction,
                 Philhealth = philhealthDeduction,
