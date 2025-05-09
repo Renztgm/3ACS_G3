@@ -4,62 +4,133 @@
     ViewData["Title"] = "Loan Details";
 }
 
+<style>
+    body {
+        background-color: #f1f3f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1 {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .loan-details-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 1000px;
+        margin: 40px auto;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    th {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-weight: 600;
+        width: 30%;
+    }
+
+    td {
+        color: #212529;
+    }
+
+    .btn-container {
+        margin-top: 30px;
+        text-align: right;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 10px 20px;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        margin-left: 10px;
+    }
+
+    
+
+    {
+        padding: 20px;
+    }
+
+    table, th, td {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    }
+</style>
+
 <h1>Loan Details</h1>
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.EmployeeID)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.EmployeeID)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.LoanType)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.LoanType)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.LoanAmount)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.LoanAmount)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.LoanStatus)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.LoanStatus)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.DateIssued)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.DateIssued)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.DueDate)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.DueDate)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.PaidLoan)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.PaidLoan)
-        </dd>
-        <dt class="col-sm-3">
-            Balance
-        </dt>
-        <dd class="col-sm-9">
-            @(Model.Loan.LoanAmount - Model.Loan.PaidLoan)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Loan.LoanID" class="btn btn-primary">Edit</a>
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+<div class="loan-details-container">
+    <table>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.EmployeeID)</th>
+            <td>@Html.DisplayFor(model => model.Loan.EmployeeID)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.LoanType)</th>
+            <td>@Html.DisplayFor(model => model.Loan.LoanType)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.LoanAmount)</th>
+            <td>@Html.DisplayFor(model => model.Loan.LoanAmount)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.LoanStatus)</th>
+            <td>@Html.DisplayFor(model => model.Loan.LoanStatus)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.DateIssued)</th>
+            <td>@Html.DisplayFor(model => model.Loan.DateIssued)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.DueDate)</th>
+            <td>@Html.DisplayFor(model => model.Loan.DueDate)</td>
+        </tr>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Loan.PaidLoan)</th>
+            <td>@Html.DisplayFor(model => model.Loan.PaidLoan)</td>
+        </tr>
+        <tr>
+            <th>Balance</th>
+            <td>@(Model.Loan.LoanAmount - Model.Loan.PaidLoan)</td>
+        </tr>
+    </table>
+
+    <div class="btn-container">
+        <a asp-page="./Edit" asp-route-id="@Model.Loan.LoanID" class="btn btn-primary">Edit</a>
+        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
