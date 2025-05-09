@@ -13,9 +13,8 @@
 
     .row-dashboard {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 30px;
     }
 
@@ -37,6 +36,17 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        width: 100%;
+    }
+
+    .card-body {
+        width: 90%;
+        max-width: 800px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
     .bar-graph-data {
@@ -61,33 +71,14 @@
             font-weight: bold;
         }
 
-    .left-column {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        width: 100%;
-    }
-
-    .card-body {
-        width: 90%;
-        max-width: 800px;
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
     #netSalaryChart {
         width: 100% !important;
         height: 400px !important;
     }
-
 </style>
 
-
 <h2 class="title-dashboard">Payroll Dashboard</h2>
+
 <div class="dashboard-container">
     <div class="row-dashboard">
         <div class="col-dashboard">
@@ -104,60 +95,53 @@
         </div>
         <div class="col-dashboard">
             <div class="card-dashboard">
-                <h5>SSS </h5>
-                <h3 class="text-danger">@Model.TotalSSS.ToString("F2")</h3>
+                <h5>SSS</h5>
+                <h3 class="text-danger">₱ @Model.TotalSSS.ToString("F2")</h3>
             </div>
         </div>
         <div class="col-dashboard">
             <div class="card-dashboard">
-                <h5>Philhealth</h5>
-                <h3 class="text-danger">@Model.TotalPhilhealth.ToString("F2")</h3>
+                <h5>PhilHealth</h5>
+                <h3 class="text-danger">₱ @Model.TotalPhilhealth.ToString("F2")</h3>
             </div>
         </div>
         <div class="col-dashboard">
             <div class="card-dashboard">
-                <h5>Pag-ibig</h5>
-                <h3 class="text-danger">@Model.TotalPagibig.ToString("F2")</h3>
+                <h5>Pag-IBIG</h5>
+                <h3 class="text-danger">₱ @Model.TotalPagibig.ToString("F2")</h3>
             </div>
         </div>
     </div>
 
     <div class="left-column">
         <div class="card-body">
-            <h5 style="text-align:center;">Daily NetSalary</h5>
+            <h5 style="text-align:center;">Daily Net Salary Forecast</h5>
             <canvas id="netSalaryChart"></canvas>
         </div>
         <div class="text-dashboard">
             <a href="/TestPayroll" class="btn btn-primary">Manage Payroll</a>
         </div>
     </div>
-
 </div>
 
-
 @section Scripts {
-    <!-- Include Chart.js library -->
+    <!-- Include Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the current total net salary from the model
+        document.addEventListener('DOMContentLoaded', function () {
             const baseNetSalary = @Json.Serialize(Model.TotalNetSalary);
-
             fetchNetSalaryForecast(baseNetSalary);
         });
 
         async function fetchNetSalaryForecast(baseNetSalary) {
             try {
                 const response = await fetch('/api/NetSalary/forecast', {
-                    credentials: 'include' // <- important for auth
+                    credentials: 'include'
                 });
 
                 const text = await response.text();
-                console.log(text); // helpful debug: see what came back
-
-                const forecastData = JSON.parse(text); // safely parse JSON
-
+                const forecastData = JSON.parse(text);
                 createChart(forecastData);
             } catch (error) {
                 console.error('Error fetching forecast data:', error);
@@ -166,14 +150,11 @@
             }
         }
 
-
-        // Function to generate the remaining days of the current month
         function getRemainingDays() {
             const currentDate = new Date();
             const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
             const remainingDays = [];
 
-            // Start from current date
             for (let d = new Date(currentDate); d <= lastDayOfMonth; d.setDate(d.getDate() + 1)) {
                 remainingDays.push(new Date(d));
             }
@@ -181,30 +162,25 @@
             return remainingDays;
         }
 
-        // Generate forecast data
         function generateForecastData(baseNetSalary) {
             const remainingDays = getRemainingDays();
 
             return remainingDays.map(date => {
-                // Simulate processing trend - more processing happens mid-month
                 const dayOfMonth = date.getDate();
+                let processedAmount = (dayOfMonth < 15)
+                    ? baseNetSalary * (1 + dayOfMonth / 20)
+                    : baseNetSalary * (2 - dayOfMonth / 20);
 
-                // Create a bell curve-like distribution with higher values in the middle of the month
-                let processedAmount;
-                if (dayOfMonth < 15) {
-                    processedAmount = baseNetSalary * (1 + dayOfMonth / 20);
-                } else {
-                    processedAmount = baseNetSalary * (2 - dayOfMonth / 20);
-                }
-
-                // Weekend days have reduced processing
                 const dayOfWeek = date.getDay();
                 if (dayOfWeek === 0 || dayOfWeek === 6) {
                     processedAmount *= 0.4;
                 }
 
-                // Format the date
-                const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const formattedDate = date.toLocaleDateString('en-PH', {
+                    timeZone: 'Asia/Manila',
+                    month: 'short',
+                    day: 'numeric'
+                });
 
                 return {
                     date: formattedDate,
@@ -213,21 +189,17 @@
             });
         }
 
-        // Create the chart
         function createChart(forecastData) {
             const ctx = document.getElementById('netSalaryChart').getContext('2d');
-
-            // Extract dates and salary values for the chart
             const dates = forecastData.map(item => item.date);
             const salaryValues = forecastData.map(item => item.netSalary);
 
-            // Create the chart
             const netSalaryChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: dates,
                     datasets: [{
-                        label: 'Daily NetSalary',
+                        label: 'Daily Net Salary',
                         data: salaryValues,
                         borderColor: '#2563eb',
                         backgroundColor: 'rgba(37, 99, 235, 0.1)',
@@ -245,11 +217,11 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                // Format as currency
-                                callback: function(value) {
-                                    return new Intl.NumberFormat('en-US', {
+                                callback: function (value) {
+                                    return new Intl.NumberFormat('en-PH', {
                                         style: 'currency',
-                                        currency: 'USD',
+                                        currency: 'PHP',
+                                        currencyDisplay: 'symbol',
                                         minimumFractionDigits: 0,
                                         maximumFractionDigits: 0
                                     }).format(value);
@@ -266,15 +238,14 @@
                     plugins: {
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
+                                    if (label) label += ': ';
                                     if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US', {
+                                        label += new Intl.NumberFormat('en-PH', {
                                             style: 'currency',
-                                            currency: 'USD',
+                                            currency: 'PHP',
+                                            currencyDisplay: 'symbol',
                                             minimumFractionDigits: 0,
                                             maximumFractionDigits: 0
                                         }).format(context.parsed.y);
