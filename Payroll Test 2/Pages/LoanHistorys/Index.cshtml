@@ -4,31 +4,89 @@
     ViewData["Title"] = "Loan Payment History";
 }
 
-<h2>Loan History</h2>
+<style>
+    .page-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 20px 0;
+        color: #333;
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Loan ID</th>
-            <th>Amount</th>
-            <th>Date Paid</th>
-            <th>Loan Type</th>
-            <th>Action</th> <!-- Column for action buttons -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.LoanHistory)
-        {
-            <tr>
-                <td>@item.LoanID</td>
-                <td>@item.LoanAmount</td>
-                <td>@item.DateIssued.ToShortDateString()</td>
-                <td>@item.Loan.LoanType</td>
-                <td>
-                    <!-- Link to the MakePayment page with the LoanID as a parameter -->
-                    <a href="/LoanHistorys/MakePayment?id=@item.LoanID" class="btn btn-primary">Make Payment</a>
-                </td>
-            </tr>
+    .table-container {
+        width: 90%;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1rem;
+        min-width: 600px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .styled-table thead {
+            background-color: #007bff;
+            color: white;
         }
-    </tbody>
-</table>
+
+        .styled-table th, .styled-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .styled-table tr:hover {
+            background-color: #eef3ff;
+        }
+
+    .btn-primary {
+        padding: 8px 16px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+</style>
+
+<h2 class="page-title">Loan Payment History</h2>
+
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Loan ID</th>
+                <th>Amount</th>
+                <th>Date Paid</th>
+                <th>Loan Type</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.LoanHistory)
+            {
+                <tr>
+                    <td>@item.LoanID</td>
+                    <td>₱@item.LoanAmount.ToString("N2")</td>
+                    <td>@item.DateIssued.ToShortDateString()</td>
+                    <td>@item.Loan?.LoanType</td>
+                    <td>
+                        <a href="/LoanHistorys/MakePayment?id=@item.LoanID" class="btn-primary">Make Payment</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

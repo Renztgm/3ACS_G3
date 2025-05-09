@@ -8,73 +8,160 @@
 
 <p>
     <a asp-page="Create" class="btn btn-primary">Create New Loan</a>
-    <a href="/LoanHistorys/Index"> LoanHistory</a> 
+    <a href="/LoanHistorys/Index" class="btn btn-secondary">View Loan History</a>
 </p>
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].EmployeeID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].LoanType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].LoanAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].LoanStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].DateIssued)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].DueDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loans[0].PaidLoan)
-            </th>
-            <th>
-                Balance
-            </th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Loans)
-        {
+
+@foreach (var employeeGroup in Model.Loans.GroupBy(l => l.EmployeeID))
+{
+    <h3 class="employee-title">Employee ID: @employeeGroup.Key</h3>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LoanType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LoanAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LoanStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateIssued)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PaidLoan)
-                </td>
-                <td>
-                    @(item.LoanAmount - item.PaidLoan)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.LoanID" class="btn btn-sm btn-primary">Edit</a>
-                    <a asp-page="./Details" asp-route-id="@item.LoanID" class="btn btn-sm btn-info">Details</a>
-                    <a asp-page="./Delete" asp-route-id="@item.LoanID" class="btn btn-sm btn-danger">Delete</a>
-                    <a href="/LoanHistorys/MakePayment?id=@item.LoanID" class="btn btn-primary">Make Payment</a>
-                </td>
+                <th>Loan Type</th>
+                <th>Loan Amount</th>
+                <th>Loan Status</th>
+                <th>Date Issued</th>
+                <th>Due Date</th>
+                <th>Paid Loan</th>
+                <th>Balance</th>
+                <th>Actions</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in employeeGroup)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.LoanType)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LoanAmount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LoanStatus)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DateIssued)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DueDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PaidLoan)</td>
+                    <td>@(item.LoanAmount - item.PaidLoan)</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.LoanID" class="btn btn-sm btn-action">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.LoanID" class="btn btn-sm btn-info">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.LoanID" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="/LoanHistorys/MakePayment?id=@item.LoanID" class="btn btn-sm btn-success">Make Payment</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<style>
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    h3.employee-title {
+        margin-top: 30px;
+        font-size: 1.5rem;
+        color: #007bff;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 30px;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
         }
-    </tbody>
-</table>
+
+        .table th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tbody tr:hover {
+            background-color: #eaeaea;
+            cursor: pointer;
+        }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        border-radius: 4px;
+        text-align: center;
+        text-decoration: none;
+        margin-right: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: 1px solid #6c757d;
+        color: #fff;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: scale(1.05);
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        border: 1px solid #28a745;
+        color: #fff;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border: 1px solid #17a2b8;
+        color: #fff;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+            transform: scale(1.05);
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: 1px solid #dc3545;
+        color: #fff;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+    .btn-sm {
+        font-size: 0.875rem;
+    }
+</style>

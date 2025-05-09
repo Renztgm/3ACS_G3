@@ -4,57 +4,86 @@
     ViewData["Title"] = "Dashboard";
 }
 <style>
-    .dashboard-container{
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
-    }
-    .left-column{
+    .dashboard-container {
         display: flex;
         flex-direction: column;
+        gap: 30px;
         align-items: center;
-    }
-    .bar-graph-data{
-        border-radius: 20px;
-        border: solid 1px gray ;
-        /* background-color: Gray; */
-        width: 50vw;
-        height: 50vh;
-        padding: 20px;
     }
 
     .row-dashboard {
         display: flex;
-        flex-direction: column;
-       justify-content: space-evenly;
-       gap: 30px;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
     }
+
     .col-dashboard {
-        
+        flex: 0 0 auto;
     }
+
     .card-dashboard {
         text-align: center;
         border-radius: 10px;
         border: solid 1px Gray;
         transition: transform 0.2s;
-        paddng: 20px;
-        width: 20vw;
-
+        padding: 20px;
+        width: 200px;
     }
 
-    .text-dashboard{
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .bar-graph-data {
+        border-radius: 20px;
+        border: solid 1px gray;
+        width: 50vw;
+        height: 50vh;
+        padding: 20px;
+    }
+
+    .text-dashboard {
         background-color: deepskyblue;
         width: 200px;
         border-radius: 20px;
         text-align: center;
         padding: 10px;
     }
-    .text-dashboard a{
-        text-decoration: none;
-        color: white;
-        font-weight: bold;  
 
+        .text-dashboard a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
     }
+
+    .card-body {
+        width: 90%;
+        max-width: 800px;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #netSalaryChart {
+        width: 100% !important;
+        height: 400px !important;
+    }
+
 </style>
 
 
@@ -95,12 +124,14 @@
 
     <div class="left-column">
         <div class="card-body">
-            <canvas id="netSalaryChart" height="400" width="500"></canvas>
+            <h5 style="text-align:center;">Daily NetSalary</h5>
+            <canvas id="netSalaryChart"></canvas>
         </div>
         <div class="text-dashboard">
             <a href="/TestPayroll" class="btn btn-primary">Manage Payroll</a>
-        </div>  
+        </div>
     </div>
+
 </div>
 
 
@@ -125,7 +156,8 @@
                 const text = await response.text();
                 console.log(text); // helpful debug: see what came back
 
-                const forecastData = JSON.parse(text);   safely parse JSON
+                const forecastData = JSON.parse(text); // safely parse JSON
+
                 createChart(forecastData);
             } catch (error) {
                 console.error('Error fetching forecast data:', error);

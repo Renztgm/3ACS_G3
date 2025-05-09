@@ -4,59 +4,195 @@
     ViewData["Title"] = "Delete Loan";
 }
 
-<h1>Delete Loan</h1>
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fc;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
 
-<h3>Are you sure you want to delete this loan?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.EmployeeID)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.EmployeeID)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.LoanType)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.LoanType)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.LoanAmount)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.LoanAmount)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.LoanStatus)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.LoanStatus)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.DateIssued)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.DateIssued)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.DueDate)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.DueDate)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Loan.PaidLoan)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Loan.PaidLoan)
-        </dd>
-    </dl>
+    h1, h3 {
+        font-weight: bold;
+        color: #2C3E50;
+    }
 
-    <form method="post">
-        <input type="hidden" asp-for="Loan.LoanID" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
-    </form>
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 2.5rem;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 1.5rem;
+        color: #E74C3C; /* Red color for urgency */
+        margin-top: 10px;
+    }
+
+    /* Container Styling */
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+        .form-container dt {
+            font-weight: bold;
+            color: #34495E;
+            margin-bottom: 8px;
+        }
+
+        .form-container dd {
+            font-size: 1.1rem;
+            color: #7F8C8D;
+            margin-bottom: 20px;
+        }
+
+    /* Button Styling */
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .btn-danger {
+        background-color: #E74C3C;
+        color: white;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #C0392B;
+        }
+
+    .btn-secondary {
+        background-color: #BDC3C7;
+        color: white;
+        text-decoration: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #95A5A6;
+        }
+
+    /* Form and Layout Enhancements */
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+        .form-actions a {
+            display: inline-block;
+        }
+
+    .hr-separator {
+        border: none;
+        height: 1px;
+        background-color: #BDC3C7;
+        margin: 20px 0;
+    }
+
+    .dl-horizontal {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        grid-gap: 10px 20px;
+    }
+
+        .dl-horizontal dt {
+            font-weight: 600;
+            color: #34495E;
+        }
+
+        .dl-horizontal dd {
+            color: #7F8C8D;
+        }
+
+    
+</style>
+
+<div class="container">
+    <h1>Delete Loan</h1>
+    <h3>Are you sure you want to delete this loan?</h3>
+
+    <div class="form-container">
+        <hr class="hr-separator" />
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.EmployeeID)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Loan.EmployeeID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.LoanType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Loan.LoanType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.LoanAmount)
+            </dt>
+            <dd>
+                ₱@Html.DisplayFor(model => model.Loan.LoanAmount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.LoanStatus)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Loan.LoanStatus)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.DateIssued)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Loan.DateIssued)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.DueDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Loan.DueDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Loan.PaidLoan)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Loan.PaidLoan)
+            </dd>
+        </dl>
+
+        <form method="post">
+            <input type="hidden" asp-for="Loan.LoanID" />
+            <div class="form-actions">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
 </div>
