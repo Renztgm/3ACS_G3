@@ -2,39 +2,52 @@
 @model Payroll_Test_2.Pages.LoanHistorys.MakePaymentModel
 @{
     ViewData["Title"] = "Make a Payment";
+    var balance = Model.Loan != null ? (Model.Loan.LoanAmount - Model.Loan.PaidLoan) : 0;
 }
 
-<h2>Make a Payment</h2>
+<h2 class="page-title">Make a Payment</h2>
 
 @if (TempData["StatusMessage"] != null)
 {
-    <div class="alert alert-info">
+    <div class="alert alert-info status-message">
         @TempData["StatusMessage"]
     </div>
 }
 
 @if (Model.Loan != null)
 {
-    <p><strong>Loan Type:</strong> @Model.Loan.LoanType</p>
-    <p><strong>Loan Amount:</strong> @Model.Loan.LoanAmount</p>
-    <p><strong>Paid Amount:</strong> @Model.Loan.PaidLoan</p>
-    <p><strong>Balance:</strong> @(Model.Loan.LoanAmount - Model.Loan.PaidLoan)</p>
+    <div class="loan-details">
+        <p><strong>Loan Type:</strong> @Model.Loan.LoanType</p>
+        <p><strong>Loan Amount:</strong> @Model.Loan.LoanAmount</p>
+        <p><strong>Paid Amount:</strong> @Model.Loan.PaidLoan</p>
+        <p><strong>Balance:</strong> @balance</p>
+    </div>
 }
 
-<form method="post">
-    <input type="text" asp-for="NewPayment.LoanID"/>
+<form method="post" class="payment-form" id="payment-form">
+    <input type="hidden" asp-for="NewPayment.LoanID" />
 
     <div class="form-group">
-        <label asp-for="NewPayment.LoanAmount">Payment Amount</label>
-        <input asp-for="NewPayment.LoanAmount" class="form-control" />
-        <span asp-validation-for="NewPayment.LoanAmount" class="text-danger"></span>
+        <label class="form-label-box">
+            <span>Payment Amount</span>
+            <input asp-for="NewPayment.LoanAmount"
+                   id="paymentAmount"
+                   type="number"
+                   min="1"
+                   class="form-input"
+                   max="@balance"
+                   oninput="validatePayment()" />
+        </label>
+        <div id="input-error" class="input-error"></div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit Payment</button>
+    <button type="submit" class="btn btn-submit">Submit Payment</button>
 </form>
+
+
 @if (!ViewData.ModelState.IsValid)
 {
-    <div class="alert alert-danger">
+    <div class="alert alert-danger error-message">
         <ul>
             @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
             {
@@ -46,4 +59,136 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        const balance = @balance;
+        const paymentInput = document.getElementById('paymentAmount');
+        const errorDiv = document.getElementById('input-error');
+
+        function validatePayment() {
+            const value = parseFloat(paymentInput.value);
+
+            if (!isNaN(value) && value > balance) {
+                paymentInput.classList.add('is-invalid');
+                errorDiv.textContent = "Amount exceeds current loan balance of " + balance + ".";
+            } else {
+                paymentInput.classList.remove('is-invalid');
+                errorDiv.textContent = "";
+            }
+        }
+    </script>
 }
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2rem;
+        color: #007bff;
+        margin-bottom: 30px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .status-message {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+
+    .error-message {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+
+    .loan-details p {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .payment-form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label-box {
+        display: block;
+        background-color: #f1f1f1;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+        .form-label-box span {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+    .form-input {
+        width: 95%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        .form-input.is-invalid {
+            border-color: #dc3545;
+            background-color: #ffe6e6;
+        }
+
+
+    .input-error {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+</style>
